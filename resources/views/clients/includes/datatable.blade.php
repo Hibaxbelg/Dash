@@ -1,0 +1,110 @@
+@push('scripts')
+<script>
+  $(function () {
+
+    var table = $("#example1").DataTable({
+      dom: 'lBrtip',
+      language : {
+          url : 'https://cdn.datatables.net/plug-ins/1.13.2/i18n/fr-FR.json'
+      },
+      ajax: "{{ route('clients.index') }}",
+      processing: true,
+      serverSide: true,
+      pageLength : 50,
+      columns: [
+      @foreach ($datatable->getColumns() as $column )
+      {data: "{{ $column['data' ]}}",name: "{{ $column['data' ]}}"},
+      @endforeach
+      {
+                data : null,
+                render : function(data,type,row,meta){
+                  var update_url = "{{ route('clients.update', ':id') }}".replace(':id', data.RECORD_ID);
+                  var delete_url = "{{ route('clients.destroy', ':id') }}".replace(':id', data.RECORD_ID);
+                  return `
+<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modifier-client-${data.RECORD_ID}">
+  <i class="fa-solid fa-user-pen"></i>
+</button>
+
+  <div class="modal fade" id="modifier-client-${data.RECORD_ID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="post" action="${update_url}">
+      <div class="modal-header main-bg">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modifier client</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          @method('patch')
+          @csrf
+          <div class="form-group">
+              <label>CNAMID</label>
+              <input type="text" class="form-control" name="CNAMID" value="${data.CNAMID}">
+          </div>
+          <div class="form-group">
+              <label>FAMNAME</label>
+              <input type="text" class="form-control" name="FAMNAME" value="${data.FAMNAME}">
+          </div>
+          <div class="form-group">
+              <label>SHORTNAME</label>
+              <input type="text" class="form-control" name="SHORTNAME" value="${data.SHORTNAME}">
+          </div>
+          <div class="form-group">
+              <label>SPECIALITE</label>
+              <input type="text" class="form-control" name="SPECIALITE" value="${data.SPECIALITE}">
+          </div>
+          <div class="form-group">
+              <label>GSM</label>
+              <input type="text" class="form-control" name="GSM" value="${data.GSM}">
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+@can('delete-client')
+                    <form method="post" action="${delete_url}">
+                      @csrf
+                      @method('delete')
+                      <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+@endcan
+                    `;
+                }
+    }
+  ],
+      "responsive": false, "lengthChange": true, "autoWidth": false,
+      "buttons": ["copy","csv", "excel", "pdf"]
+
+    });
+    // .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    table.on( 'preDraw', function () {
+        // alert( 'processing' );
+        $("#example1_wrapper").css({opacity : 0.75});
+    } );
+
+    table.on( 'draw', function () {
+      $("#example1_wrapper").css({opacity : 1});
+
+    } );
+
+    $('.datatable-filter').on('keyup change', function(e) {
+      let column_id = $(this).attr("data-column-id");
+      // if(this.type != "select" || e.keyCode == 13){
+        console.log(`Searching for ${this.value} in column ${column_id}`);
+        table.column(column_id).search(this.value).draw();
+
+      // }
+    });
+
+  });
+</script>
+@endpush

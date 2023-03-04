@@ -1,0 +1,25 @@
+body{
+    font-family: "Nunito", sans-serif" !important;
+}
+.main-bg{
+    background: #6777ef !important;
+    color: #fff;
+}
+.dataTables_wrapper .dataTables_processing {
+    position: fixed !important;
+    top: 50% !important;
+  }
+
+  .main-header {
+    background: #6777ef !important;
+    color: #fff !important;
+  }
+
+  .navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+  }
+
+  .btn-primary {
+    background-color: #6777ef;
+    border-color: #6777ef;
+   }
