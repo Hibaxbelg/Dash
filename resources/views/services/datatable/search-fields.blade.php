@@ -11,6 +11,16 @@
 $('.select2bs4').select2({
   theme: 'bootstrap4'
 })
+
+function reset(){
+    let inputs = document.getElementsByClassName('datatable-filter');
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].value = "";
+    }
+
+    table.draw();
+
+}
 </script>
 @endpush
 <div class="row mt-2">
@@ -30,4 +40,5 @@ $('.select2bs4').select2({
         @endif
     </div>
     @endforeach
+    <button class="btn btn-primary" onclick="reset()">Test</button>
 </div>

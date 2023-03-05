@@ -1,8 +1,9 @@
 @push('scripts')
 <script>
+  var table;
   $(function () {
 
-    var table = $("#example1").DataTable({
+     table = $("#example1").DataTable({
       dom: 'lBrtip',
       language : {
           url : 'https://cdn.datatables.net/plug-ins/1.13.2/i18n/fr-FR.json'
@@ -21,9 +22,25 @@
                   var update_url = "{{ route('clients.update', ':id') }}".replace(':id', data.RECORD_ID);
                   var delete_url = "{{ route('clients.destroy', ':id') }}".replace(':id', data.RECORD_ID);
                   return `
-<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modifier-client-${data.RECORD_ID}">
-  <i class="fa-solid fa-user-pen"></i>
-</button>
+                  <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+    <i class="fa-solid fa-ellipsis"></i>
+  </button>
+  <div class="dropdown-menu">
+    <a style="cursor: pointer;" class="dropdown-item" data-toggle="modal" data-target="#modifier-client-${data.RECORD_ID}"><i class="fa-solid fa-user-pen"></i> Modifier</a>
+    @can('delete-client')
+    <div class="dropdown-divider"></div>
+    <a style="cursor: pointer;" class="dropdown-item" onClick="document.getElementById('from-delete-${data.RECORD_ID}').submit();">
+      <i class="fa-solid fa-trash"></i> Supprimer
+      <form method="post" id="from-delete-${data.RECORD_ID}" action="${delete_url}" style="display:none">
+                      @csrf
+                      @method('delete')
+                      <button></button>
+      </form>
+    </a>
+    @endcan
+  </div>
+</div>
 
   <div class="modal fade" id="modifier-client-${data.RECORD_ID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -69,13 +86,6 @@
   </div>
 </div>
 
-@can('delete-client')
-                    <form method="post" action="${delete_url}">
-                      @csrf
-                      @method('delete')
-                      <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </form>
-@endcan
                     `;
                 }
     }
