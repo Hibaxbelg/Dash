@@ -22,7 +22,6 @@ Route::get('/test', function () {
 })->name('clients.commandes');
 
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -40,7 +39,4 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/clients', 'App\Http\Controllers\ClientsController@store')
         ->name('clients.store');
-
-
-
 });
