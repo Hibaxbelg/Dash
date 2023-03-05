@@ -22,7 +22,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('clients.index') }}" class="nav-link">
-                        {{-- <i class="nav-icon fas fa-ellipsis-h"></i> --}}
+                        <i class="nav-icon fa-sharp fa-solid fa-users"></i>
                         <p>Liste des clients</p>
                     </a>
                 </li>
@@ -31,8 +31,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('clients.commandes') }}" class="nav-link">
-                        {{-- <i class="nav-icon fas fa-ellipsis-h"></i> --}}
+                    <a href="{{ route('clients.commandes.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-bars"></i>
                         <p>Liste des commandes</p>
                     </a>
                 </li>

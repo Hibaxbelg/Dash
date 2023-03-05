@@ -14,8 +14,12 @@ $('.select2bs4').select2({
 
 function reset(){
     let inputs = document.getElementsByClassName('datatable-filter');
+
+    $(".select2bs4").trigger("change");
+
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].value = "";
+        table.column(inputs[i].getAttribute("data-column-id")).search('');
     }
 
     table.draw();
@@ -40,5 +44,7 @@ function reset(){
         @endif
     </div>
     @endforeach
-    <button class="btn btn-primary" onclick="reset()">Test</button>
+    <button class="btn btn-primary" style="align-self:end;margin-bottom:8px" onclick="reset()"><i
+            class="fa-solid fa-rotate-left"></i>
+        Réinitialiser</button>
 </div>

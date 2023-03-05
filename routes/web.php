@@ -40,3 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/clients', 'App\Http\Controllers\ClientsController@store')
         ->name('clients.store');
 });
+
+
+Route::get('/commandes', 'App\Http\Controllers\CommandController@index')
+    ->name('clients.commandes.index');
+
+
+Route::post('/clients/{RECORD_ID}/commandes', 'App\Http\Controllers\CommandController@create')
+    ->name('clients.commandes.store');
