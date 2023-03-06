@@ -1,6 +1,6 @@
 @push('scripts')
 <script>
-  var table;
+    var table;
   $(function () {
 
      table = $("#example1").DataTable({
@@ -21,6 +21,7 @@
                 render : function(data,type,row,meta){
                   var update_url = "{{ route('clients.update', ':id') }}".replace(':id', data.RECORD_ID);
                   var delete_url = "{{ route('clients.destroy', ':id') }}".replace(':id', data.RECORD_ID);
+                  var create_order_url = "{{ route('orders.store') }}";
                   return `
 
 
@@ -49,7 +50,7 @@
         @endcan
         <div class="dropdown-divider"></div>
         <a style="cursor: pointer;" class="dropdown-item" data-toggle="modal"
-            data-target="#create-commande-${data.RECORD_ID}">
+            data-target="#create-order-${data.RECORD_ID}">
             <i class="fa-solid fa-circle-plus"></i> Creer une commande
         </a>
     </div>
@@ -57,10 +58,10 @@
 
 
 
-<div class="modal fade" id="create-commande-${data.RECORD_ID}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="create-order-${data.RECORD_ID}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="post" action='http://localhost:8000/clients/${data.RECORD_ID}/commandes'>
+            <form method="post" action='${create_order_url}'>
                 <div class="modal-header main-bg">
                     <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une commande</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -69,9 +70,7 @@
                 </div>
                 <div class="modal-body">
                     @csrf
-
                     <input type="hidden" class="form-control" name="id" value="${data.RECORD_ID}">
-
                     <div class="form-group">
                         <label>Date</label>
                         <input type="datetime-local" class="form-control" name="date" required>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('auth.login');
@@ -21,10 +22,7 @@ Route::get('/test', function () {
     return view('test');
 })->name('clients.commandes');
 
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 // user has been authenticated to access these pages
 Route::middleware('auth')->group(function () {
@@ -41,10 +39,4 @@ Route::middleware('auth')->group(function () {
         ->name('clients.store');
 });
 
-
-Route::get('/commandes', 'App\Http\Controllers\CommandController@index')
-    ->name('clients.commandes.index');
-
-
-Route::post('/clients/{RECORD_ID}/commandes', 'App\Http\Controllers\CommandController@create')
-    ->name('clients.commandes.store');
+Route::resource('/orders', OrderController::class);

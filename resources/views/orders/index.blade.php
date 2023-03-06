@@ -6,20 +6,10 @@ Commandes
 @endsection
 
 {{-- datatable --}}
-@include('commandes.includes.datatable')
+@include('orders.includes.datatable')
 
 {{-- Alert --}}
-{{-- @include('clients.includes.alert') --}}
-
-{{-- validation ajouter client --}}
-
-@push('scripts')
-@if(count($errors) > 0)
-<script>
-    $("#ajouter-client").modal()
-</script>
-@endif
-@endpush
+@include('includes.alert')
 
 @section('content')
 <div class="content-wrapper">
