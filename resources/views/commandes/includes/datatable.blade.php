@@ -34,6 +34,40 @@
                   // ${data.status == 'installed	' ? '<span class="badge badge-success">Installé</span>' : ''}
                   //   `;
          }
+    },
+    {
+      data : null,
+      render : function(data,type,row,meta){
+        return `
+        
+        <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-ellipsis"></i>
+    </button>
+
+    <div class="dropdown-menu">
+        <a style="cursor: pointer;" class="dropdown-item" data-toggle="modal"
+            data-target="#modifier-client-${data.id}">
+            <i class="fa-solid fa-user-pen"></i> Modifier
+        </a>
+
+        @can('delete-client')
+        <div class="dropdown-divider"></div>
+        <a style="cursor: pointer;" class="dropdown-item"
+            onClick="document.getElementById('client-delete-form-${data.id}').submit();">
+            <i class="fa-solid fa-trash"></i> Supprimer
+            <form method="post" id="client-delete-form-${data.id}" action="" style="display:none">
+                @csrf
+                @method('delete')
+                <button></button>
+            </form>
+        </a>
+        @endcan
+ 
+    </div>
+</div>
+`;
+      }
     }
   ],
       "responsive": false, "lengthChange": true, "autoWidth": false,
