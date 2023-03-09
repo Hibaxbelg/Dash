@@ -50,7 +50,7 @@
             data-target="#order-edit-${data.id}-modal">
             <i class="fa-solid fa-pen"></i> Modifier
         </a>
-        @can('delete-client')
+        @can('delete-order')
         <div class="dropdown-divider"></div>
         <a style="cursor: pointer;" class="dropdown-item"
             onClick="document.getElementById('order-delete-${data.id}-form').submit();">
@@ -91,6 +91,10 @@
                     <div class="form-group">
                         <label>Date</label>
                         <input type="datetime-local" class="form-control" name="date" value="${data.date}">
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre des postes :</label>
+                        <input type="number" min="1" class="form-control" name="posts" required value="${data.posts}">
                     </div>
                     <div class="form-group">
                         <label>Note </label>

@@ -76,6 +76,10 @@
                         <input type="datetime-local" class="form-control" name="date" required>
                     </div>
                     <div class="form-group">
+                        <label>Nombre des postes :</label>
+                        <input type="number" min="1" class="form-control" name="posts" required>
+                    </div>
+                    <div class="form-group">
                         <label>Note :</label>
                         <textarea type="date" class="form-control" name="note"
                             placeholder="ajouter une note"></textarea>

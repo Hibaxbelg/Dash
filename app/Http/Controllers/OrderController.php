@@ -16,7 +16,7 @@ class OrderController extends Controller
             return datatables()->of(
                 DataTableService::makeSearchableBuilder(
                     Order::query()
-                        ->select('id', 'clients_id', 'status', 'date', 'note')
+                        ->select('id', 'client_id', 'status', 'date', 'note', 'posts')
                         ->OrderBy('status', 'DESC')
                         ->with('client:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE'),
                     $request->columns
@@ -38,6 +38,7 @@ class OrderController extends Controller
         $datatable->addColumn('Telephone', ['data' => 'client.TELEPHONE']);
         $datatable->addColumn('Note', ['data' => 'note']);
         $datatable->addColumn('Date', ['data' => 'date']);
+        $datatable->addColumn('Nb_Postes', ['data' => 'posts']);
 
         return view('orders.index', ['datatable' => $datatable]);
     }
@@ -49,12 +50,14 @@ class OrderController extends Controller
             'id' => 'required|exists:mainmedlist,RECORD_ID',
             'date' => 'required|date',
             'note' => 'nullable',
+            'posts' => 'required|numeric|min:1'
         ]);
 
         Order::create([
-            'clients_id' => $request->id,
+            'client_id' => $request->id,
             'date' => $request->date,
             'note' => $request->note,
+            'posts' => $request->posts,
         ]);
 
         return redirect()->route('orders.index')
@@ -71,6 +74,7 @@ class OrderController extends Controller
             'status' => 'required',
             'date' => 'date',
             'note' => 'nullable',
+            'posts' => 'required|numeric|min:1'
         ]);
 
         if ($validator->fails()) {
@@ -96,6 +100,10 @@ class OrderController extends Controller
 
     public function destroy($id, Request $request)
     {
+
+        if (!Gate::allows('delete-order')) {
+            abort(403);
+        }
 
         Order::where('id', $id)->firstOrFail()->delete();
 

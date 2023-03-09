@@ -14,11 +14,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Clients::class)->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('client_id');
             $table->dateTime('date');
             $table->enum('status', ['installed', 'in_progress', 'canceled'])->default('in_progress');
             $table->string('note')->nullable();
+            $table->integer('posts')->default(1);
             $table->timestamps();
+
+            // $table->foreign('client_id')->references('RECORD_ID')->on('mainmedlist')->onDelete('cascade');
         });
     }
 

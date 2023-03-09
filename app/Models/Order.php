@@ -13,6 +13,6 @@ class Order extends Model
 
     public function client()
     {
-        return $this->belongsTo(Clients::class, 'clients_id', 'RECORD_ID');
+        return $this->belongsTo(Clients::class, 'client_id', 'RECORD_ID');
     }
 }
