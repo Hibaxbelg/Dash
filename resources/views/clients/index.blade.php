@@ -2,7 +2,7 @@
 
 
 @section('title')
-    Clients
+Clients
 @endsection
 
 {{-- datatable --}}
@@ -21,6 +21,19 @@
 @endif
 @endpush
 
+@push('scripts')
+<script>
+  $(function(){
+    $('#example1').on( 'draw.dt', function () {
+      $('.edit-client-modal').on('show.bs.modal', function (event) {
+        $('.select2bs4-modal').select2({
+          theme: 'bootstrap4'
+        })
+      })
+    });
+});
+</script>
+@endpush
 @section('content')
 <div class="content-wrapper">
   <section class="content">

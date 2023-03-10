@@ -98,7 +98,7 @@
 
 {{-- ====  EDIT CLIENT MODEL ==== --}}
 
-<div class="modal fade" id="modifier-client-${data.RECORD_ID}" tabindex="-1" role="dialog">
+<div class="modal fade edit-client-modal" id="modifier-client-${data.RECORD_ID}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
         <form method="post" action="${update_url}">
             <div class="modal-content">
@@ -130,9 +130,9 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label>SPECIALITE</label>
-                                <select name="SPECIALITE" class="form-control select2bs4">
+                                <select name="SPECIALITE" class="form-control select2bs4 select2bs4-modal">
                                     @foreach ($specialites as $specialite)
-                                    <option value="{{ $specialite }}">{{ $specialite }}</option>
+                                    <option value="{{ $specialite }}" ${data.SPECIALITE == '{{  $specialite }}' ? 'selected' : ''}>{{ $specialite }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -152,9 +152,9 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>GOUVNAME</label>
-                                    <select name="GOUVNAME" class="form-control select2bs4">
+                                    <select name="GOUVNAME" class="form-control select2bs4 select2bs4-modal">
                                     @foreach ($gouvnames as $gouvname)
-                                    <option value="{{ $gouvname }}" >{{ $gouvname }}</option>
+                                    <option value="{{ $gouvname }}" ${data.GOUVNAME == '{{  $gouvname }}' ? 'selected' : ''}>{{ $gouvname }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -162,9 +162,9 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>LOCALITE</label>
-                                <select name="LOCALITE" class="form-control select2bs4">
+                                <select name="LOCALITE" class="form-control select2bs4 select2bs4-modal">
                                     @foreach ($localites as $localite)
-                                    <option value="{{ $localite }}">{{ $localite }}</option>
+                                    <option value="{{ $localite }}" ${data.LOCALITE == '{{  $localite }}' ? 'selected' : ''}>{{ $localite }}</option>
                                     @endforeach
                                 </select>
                             </div>
