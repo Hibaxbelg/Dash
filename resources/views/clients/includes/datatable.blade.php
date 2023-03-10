@@ -96,9 +96,10 @@
 </div>
 
 
+{{-- ====  EDIT CLIENT MODEL ==== --}}
 
 <div class="modal fade" id="modifier-client-${data.RECORD_ID}" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <form method="post" action="${update_url}">
             <div class="modal-content">
                 <div class="modal-header main-bg">
@@ -118,26 +119,77 @@
                     @csrf
                     @method('patch')
                     @csrf
-                    <div class="form-group">
-                        <label>CNAMID</label>
-                        <input type="text" class="form-control" name="CNAMID" value="${data.CNAMID}">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>CNAMID</label>
+                                <input type="text" class="form-control" name="CNAMID" value="${data.CNAMID}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>SPECIALITE</label>
+                                <select name="SPECIALITE" class="form-control select2bs4">
+                                    @foreach ($specialites as $specialite)
+                                    <option value="{{ $specialite }}">{{ $specialite }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>SHORTNAME</label>
+                                <input type="text" class="form-control" name="SHORTNAME" value="${data.SHORTNAME}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>FAMNAME</label>
+                                <input type="text" class="form-control" name="FAMNAME" value="${data.FAMNAME}">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>GOUVNAME</label>
+                                    <select name="GOUVNAME" class="form-control select2bs4">
+                                    @foreach ($gouvnames as $gouvname)
+                                    <option value="{{ $gouvname }}" >{{ $gouvname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>LOCALITE</label>
+                                <select name="LOCALITE" class="form-control select2bs4">
+                                    @foreach ($localites as $localite)
+                                    <option value="{{ $localite }}">{{ $localite }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>ADRESSE</label>
+                                <input type="text" class="form-control" name="ADRESSE" value="${data.ADRESSE}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>GSM</label>
+                                <input type="text" class="form-control" name="GSM" value="${data.GSM}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>TELEPHONE</label>
+                                <input type="text" class="form-control" name="TELEPHONE"
+                                    value="${data.TELEPHONE}">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>FAMNAME</label>
-                        <input type="text" class="form-control" name="FAMNAME" value="${data.FAMNAME}">
-                    </div>
-                    <div class="form-group">
-                        <label>SHORTNAME</label>
-                        <input type="text" class="form-control" name="SHORTNAME" value="${data.SHORTNAME}">
-                    </div>
-                    <div class="form-group">
-                        <label>SPECIALITE</label>
-                        <input type="text" class="form-control" name="SPECIALITE" value="${data.SPECIALITE}">
-                    </div>
-                    <div class="form-group">
-                        <label>GSM</label>
-                        <input type="text" class="form-control" name="GSM" value="${data.GSM}">
-                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
