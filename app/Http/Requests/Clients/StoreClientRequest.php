@@ -22,11 +22,15 @@ class StoreClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'CNAMID' => 'required|numeric|max:12',
-            'FAMNAME' => 'required',
-            'SHORTNAME' => 'required',
+            'CNAMID' => 'required|string|max:12',
             'SPECIALITE' => 'required',
-            'GSM' => 'required|numeric|min:8|max:8',
+            'SHORTNAME' => 'required',
+            'FAMNAME' => 'required',
+            'GOUVNAME' => 'required',
+            'LOCALITE' => 'required',
+            'ADRESSE' => 'required',
+            'GSM' => 'nullable|numeric|digits;8',
+            'TELEPHONE' => 'required|numeric|digits:8',
         ];
     }
 }

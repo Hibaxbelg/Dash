@@ -36,7 +36,7 @@ class ClientsController extends Controller
         $datatable->addColumn('Tél', ['data' => 'TELEPHONE']);
         $datatable->addColumn('Gsm', ['data' => 'GSM']);
 
-        return view('clients.index', ['datatable' => $datatable]);
+        return view('clients.index', ['datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites]);
     }
 
 
