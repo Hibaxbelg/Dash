@@ -25,6 +25,21 @@ function reset(){
     table.draw();
 
 }
+
+function search(){
+
+    let inputs = document.getElementsByClassName('datatable-filter');
+
+    for (var i = 0; i < inputs.length; i++) {
+        let column_id = inputs[i].getAttribute('data-column-id');
+        let value = inputs[i].value;
+        // table.column(column_id).search(this.value).draw();
+        // table.column(inputs[i].getAttribute("data-column-id")).search(inputs[i].value);
+        table.column(column_id).search(value);
+    }
+
+    table.draw();
+}
 </script>
 @endpush
 <div class="row mt-2">
@@ -44,7 +59,12 @@ function reset(){
         @endif
     </div>
     @endforeach
-    <button class="btn btn-primary" style="align-self:end;margin-bottom:8px" onclick="reset()"><i
+
+    <button type="button" class="btn btn-primary mr-2" style="align-self:end;margin-bottom:8px" onclick="search()"><i
+            class="fa-solid fa-magnifying-glass"></i>
+        Rechercher</button>
+
+    <button type="button" class="btn btn-primary" style="align-self:end;margin-bottom:8px" onclick="reset()"><i
             class="fa-solid fa-rotate-left"></i>
         Réinitialiser</button>
 </div>

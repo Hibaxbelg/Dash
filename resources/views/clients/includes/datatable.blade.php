@@ -218,14 +218,14 @@
 
     } );
 
-    $('.datatable-filter').on('keyup change', function(e) {
-      let column_id = $(this).attr("data-column-id");
-      // if(this.type != "select" || e.keyCode == 13){
-        console.log(`Searching for ${this.value} in column ${column_id}`);
-        table.column(column_id).search(this.value).draw();
+    // $('.datatable-filter').on('keyup change', function(e) {
+    //   let column_id = $(this).attr("data-column-id");
+    //   // if(this.type != "select" || e.keyCode == 13){
+    //     console.log(`Searching for ${this.value} in column ${column_id}`);
+    //     table.column(column_id).search(this.value).draw();
 
-      // }
-    });
+    //   // }
+    // });
 
   });
 </script>
