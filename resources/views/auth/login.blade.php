@@ -16,7 +16,7 @@
     <div class="animated bounceInDown">
     <div class="container">
         @if(count($errors))
-        <span class="error animated tada" id="msg" style="display: inline-block;">
+        <span class="error animated tada" id="msg" style="display: inline-block;height:auto">
             {{ $errors->first() }}
         </span>
         @endif
@@ -32,7 +32,7 @@
            
             <span class="eye" onclick="myToggle()"  >
                 <i id="hide1" class="fa fa-eye"></i>
-                <i id="hide2" class="fa fa-eye-slash""></i>
+                <i id="hide2" class="fa fa-eye-slash"></i>
             </span>
             <input type="password" name="password" placeholder="Passsword" id="pwd" autocomplete="off" name="password" placeholder="{{ __('Password') }}"  autocomplete="current-password">
 
