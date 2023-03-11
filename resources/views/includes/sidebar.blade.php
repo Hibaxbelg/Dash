@@ -38,6 +38,20 @@
                 </li>
             </ul>
         </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="#" onclick="return document.getElementById('logout-form').submit()" class="nav-link">
+                        <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                        <p>Se déconnecter</p>
+                    </a>
+                    <form action="{{ route('logout') }}" id="logout-form" method="post" style="display:none">
+                        @csrf
+                        <button type="submit"></button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
