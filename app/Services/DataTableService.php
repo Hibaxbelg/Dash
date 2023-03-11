@@ -21,10 +21,10 @@ class DataTableService
                     $relation = explode('.', $column_name)[0];
                     $column_name = explode('.', $column_name)[1];
                     $query = $query->whereHas($relation, function ($query) use ($column_name, $column_search) {
-                        $query->where($column_name, 'like', '%' . $column_search . '%');
+                        $query->where($column_name, 'like',  $column_search . '%');
                     });
                 } else {
-                    $query = $query->where($column_name, 'like', '%' . $column_search . '%');
+                    $query = $query->where($column_name, 'like', $column_search . '%');
                 }
             }
         }
