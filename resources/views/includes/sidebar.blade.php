@@ -21,9 +21,9 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('clients.index') }}" class="nav-link">
-                        <i class="nav-icon fa-sharp fa-solid fa-users"></i>
-                        <p>Liste des clients</p>
+                    <a href="{{ route('doctors.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-user-doctor"></i>
+                        <p>Liste des médecins</p>
                     </a>
                 </li>
             </ul>

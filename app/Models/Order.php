@@ -11,8 +11,8 @@ class Order extends Model
 
     protected $guarded = [];
 
-    public function client()
+    public function doctor()
     {
-        return $this->belongsTo(Clients::class, 'client_id', 'RECORD_ID');
+        return $this->belongsTo(Doctor::class, 'doctor_id', 'RECORD_ID');
     }
 }

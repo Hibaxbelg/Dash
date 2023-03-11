@@ -26,17 +26,17 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // user has been authenticated to access these pages
 Route::middleware('auth')->group(function () {
-    Route::get('/clients', 'App\Http\Controllers\ClientsController@index')
-        ->name('clients.index');
+    Route::get('/doctors', 'App\Http\Controllers\DoctorController@index')
+        ->name('doctors.index');
 
-    Route::delete('/clients/{RECORD_ID}', 'App\Http\Controllers\ClientsController@destroy')
-        ->name('clients.destroy');
+    Route::delete('/doctors/{RECORD_ID}', 'App\Http\Controllers\DoctorController@destroy')
+        ->name('doctors.destroy');
 
-    Route::patch('/clients/{RECORD_ID}/edit', 'App\Http\Controllers\ClientsController@update')
-        ->name('clients.update');
+    Route::patch('/doctors/{RECORD_ID}/edit', 'App\Http\Controllers\DoctorController@update')
+        ->name('doctors.update');
 
-    Route::post('/clients', 'App\Http\Controllers\ClientsController@store')
-        ->name('clients.store');
+    Route::post('/doctors', 'App\Http\Controllers\DoctorController@store')
+        ->name('doctors.store');
 });
 
 Route::resource('/orders', OrderController::class);

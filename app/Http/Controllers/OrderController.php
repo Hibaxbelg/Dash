@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clients;
+use App\Models\Doctor;
 use App\Models\Order;
 use App\Services\DataTableService;
 use Illuminate\Http\Request;
@@ -16,26 +16,26 @@ class OrderController extends Controller
             return datatables()->of(
                 DataTableService::makeSearchableBuilder(
                     Order::query()
-                        ->select('id', 'client_id', 'status', 'date', 'note', 'posts')
+                        ->select('id', 'doctor_id', 'status', 'date', 'note', 'posts')
                         ->OrderBy('status', 'DESC')
-                        ->with('client:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE'),
+                        ->with('doctor:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE'),
                     $request->columns
                 )
             )
                 ->make(true);
         }
 
-        $localites = Clients::select('LOCALITE')->distinct()->pluck('LOCALITE');
-        $gouvnames = Clients::select('gouvname')->distinct()->pluck('gouvname');
+        $localites = Doctor::select('LOCALITE')->distinct()->pluck('LOCALITE');
+        $gouvnames = Doctor::select('gouvname')->distinct()->pluck('gouvname');
 
         $datatable = new DataTableService();
 
         $datatable->addColumn('id');
-        $datatable->addColumn('Nom Client', ['data' => 'client.FAMNAME']);
-        $datatable->addColumn('Prenom Client', ['data' => 'client.SHORTNAME']);
-        $datatable->addColumn('Localité', ['data' => 'client.LOCALITE', 'type' => 'select', 'values' => $localites]);
-        $datatable->addColumn('GouvName', ['data' => 'client.GOUVNAME', 'type' => 'select', 'values' => $gouvnames]);
-        $datatable->addColumn('Telephone', ['data' => 'client.TELEPHONE']);
+        $datatable->addColumn('Nom Client', ['data' => 'doctor.FAMNAME']);
+        $datatable->addColumn('Prenom Client', ['data' => 'doctor.SHORTNAME']);
+        $datatable->addColumn('Localité', ['data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites]);
+        $datatable->addColumn('GouvName', ['data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames]);
+        $datatable->addColumn('Telephone', ['data' => 'doctor.TELEPHONE']);
         $datatable->addColumn('Note', ['data' => 'note']);
         $datatable->addColumn('Date', ['data' => 'date']);
         $datatable->addColumn('Nb_Postes', ['data' => 'posts']);
@@ -47,14 +47,14 @@ class OrderController extends Controller
     {
         // TODO: move validation to a request class
         $request->validate([
-            'id' => 'required|exists:mainmedlist,RECORD_ID',
+            'id' => 'required|exists:doctors,RECORD_ID',
             'date' => 'required|date',
             'note' => 'nullable',
             'posts' => 'required|numeric|min:1'
         ]);
 
         Order::create([
-            'client_id' => $request->id,
+            'doctor_id' => $request->id,
             'date' => $request->date,
             'note' => $request->note,
             'posts' => $request->posts,
