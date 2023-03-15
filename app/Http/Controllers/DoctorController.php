@@ -4,38 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Doctors\StoreDoctorRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Doctor;
 use App\Services\DataTableService;
-use DataTables;
 use Illuminate\Support\Facades\Gate;
 
 class DoctorController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            return datatables()->of(DataTableService::makeSearchableBuilder(Doctor::query(), $request->columns))
-                ->make(true);
-        }
 
         $gouvnames = Doctor::select('gouvname')->distinct()->pluck('gouvname');
         $localites = Doctor::select('LOCALITE')->distinct()->pluck('LOCALITE');
         $specialites = Doctor::select('SPECIALITE')->distinct()->pluck('SPECIALITE');
 
-        $datatable = new DataTableService();
+        if ($request->ajax()) {
 
-        $datatable->addColumn('UID');
-        $datatable->addColumn('Nom', ['data' => 'FAMNAME']);
-        $datatable->addColumn('Prénom', ['data' => 'SHORTNAME']);
-        $datatable->addColumn('Spécalité', ['data' => 'SPECIALITE', 'type' => 'select', 'values' => $specialites]);
-        $datatable->addColumn('ID.CNAM', ['data' => 'CNAMID']);
-        $datatable->addColumn('Gouvern', ['data' => 'GOUVNAME', 'type' => 'select', 'values' => $gouvnames]);
-        $datatable->addColumn('Localité', ['data' => 'LOCALITE', 'type' => 'select', 'values' => $localites]);
-        $datatable->addColumn('Tél', ['data' => 'TELEPHONE']);
-        $datatable->addColumn('Gsm', ['data' => 'GSM']);
+            $table = datatables()::of(Doctor::query());
 
-        return view('doctors.index', ['datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites]);
+            $table->addColumn('actions', fn ($row) => view('admin.doctors.includes.datatable.actions', [
+                'row' => $row,
+                'gouvnames' => $gouvnames,
+                'localites' => $localites,
+                'specialites' => $specialites,
+            ]));
+
+            return $table->make(true);
+        }
+
+        $datatable = new DataTableService([
+            ['name' => 'UID'],
+            ['name' => 'Nom', 'data' => 'FAMNAME'],
+            ['name' => 'Prénom', 'data' => 'SHORTNAME'],
+            ['name' => 'Spécalité', 'data' => 'SPECIALITE', 'type' => 'select', 'values' => $specialites],
+            ['name' => 'ID.CNAM', 'data' => 'CNAMID'],
+            ['name' => 'Gouvern', 'data' => 'GOUVNAME', 'type' => 'select', 'values' => $gouvnames],
+            ['name' => 'Localité', 'data' => 'LOCALITE', 'type' => 'select', 'values' => $localites],
+            ['name' => 'Tél', 'data' => 'TELEPHONE'],
+            ['name' => 'Gsm', 'data' => 'GSM'],
+            ['name' => '?', 'data' => 'actions', 'searchable' => false]
+        ]);
+
+        return view('admin.doctors.index', ['datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites]);
     }
 
 

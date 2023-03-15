@@ -8,55 +8,42 @@ class DataTableService
 {
     public array $columns = [];
 
-    static function makeSearchableBuilder(Builder $query, array $columns): Builder
+    public function __construct(array $columns)
     {
         foreach ($columns as $column) {
-            $column_name = $column['data'];
-            $column_search = $column['search']['value'];
-            // $column_order = $column['orderable'];
-            // $column_searchable = $column['searchable'];
-            if ($column_search != '') {
-                // if column_search contain . then it's a relation
-                if (strpos($column_name, '.') !== false) {
-                    $relation = explode('.', $column_name)[0];
-                    $column_name = explode('.', $column_name)[1];
-                    $query = $query->whereHas($relation, function ($query) use ($column_name, $column_search) {
-                        $query->where($column_name, 'like',  $column_search . '%');
-                    });
-                } else {
-                    $query = $query->where($column_name, 'like', $column_search . '%');
-                }
-            }
+            $this->addColumn($column);
         }
-        return $query;
     }
 
-    public function addColumn(String $name, array $options = []): void
+    public function addColumn(array $options = []): void
     {
+        if (!isset($options['name'])) throw new \Exception('Column name is required');
+
         $this->columns[] = [
             'id' => count($this->columns),
-            'name' => $name,
-            'data' => $options['data'] ?? $name,
+            'name' => $options['name'],
+            'data' => $options['data'] ?? $options['name'],
             'type' => $options['type'] ?? 'text',
             'values' => $options['values'] ?? [],
             'searchable' => $options['searchable'] ?? true,
         ];
     }
 
-    public function getColumns(): array
+    public function getColumns($json = false): array
     {
+        if ($json) {
+            return collect($this->columns)->map(fn ($item) => collect($item)->only('data'))->toArray();
+        }
         return $this->columns;
     }
 
-    public function getSearcheableColumns(): array
-    {
-        return array_filter($this->columns, function ($column) {
-            return $column['searchable'];
-        });
-    }
-
-    public function getSearchFields()
+    public function buildSearchInputs()
     {
         return view('services.datatable.search-fields', ['datatable' => $this]);
+    }
+
+    public function drawTable()
+    {
+        return view('services.datatable.table', ['datatable' => $this]);
     }
 }

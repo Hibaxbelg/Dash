@@ -6,41 +6,46 @@ use App\Models\Doctor;
 use App\Models\Order;
 use App\Services\DataTableService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            return datatables()->of(
-                DataTableService::makeSearchableBuilder(
-                    Order::query()
-                        ->select('id', 'doctor_id', 'status', 'date', 'note', 'posts')
-                        ->OrderBy('status', 'DESC')
-                        ->with('doctor:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE'),
-                    $request->columns
-                )
-            )
-                ->make(true);
-        }
-
         $localites = Doctor::select('LOCALITE')->distinct()->pluck('LOCALITE');
         $gouvnames = Doctor::select('gouvname')->distinct()->pluck('gouvname');
 
-        $datatable = new DataTableService();
+        if ($request->ajax()) {
 
-        $datatable->addColumn('id');
-        $datatable->addColumn('Nom Client', ['data' => 'doctor.FAMNAME']);
-        $datatable->addColumn('Prenom Client', ['data' => 'doctor.SHORTNAME']);
-        $datatable->addColumn('Localité', ['data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites]);
-        $datatable->addColumn('GouvName', ['data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames]);
-        $datatable->addColumn('Telephone', ['data' => 'doctor.TELEPHONE']);
-        $datatable->addColumn('Note', ['data' => 'note']);
-        $datatable->addColumn('Date', ['data' => 'date']);
-        $datatable->addColumn('Nb_Postes', ['data' => 'posts']);
+            $table = datatables()->of(
+                Order::query()
+                    ->with('doctor:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE')
+                    ->select('id', 'doctor_id', 'status', 'date', 'note', 'posts')
+            );
 
-        return view('orders.index', ['datatable' => $datatable]);
+            $table->addColumn('actions', fn ($row) => view('admin.orders.includes.datatable.actions', ['row' => $row]));
+
+            $table->addColumn('status', fn ($row) => view('admin.orders.includes.datatable.status-field', ['row' => $row]));
+
+            return $table->make(true);
+        }
+
+        $datatable = new DataTableService([
+            ['name' => 'ID', 'data' => 'id'],
+            ['name' => 'Nom Client', 'data' => 'doctor.FAMNAME'],
+            ['name' => 'Prenom Client', 'data' => 'doctor.SHORTNAME'],
+            ['name' => 'Localité', 'data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites],
+            ['name' => 'GouvName', 'data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames],
+            ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE'],
+            ['name' => 'Note', 'data' => 'note'],
+            ['name' => 'Date', 'data' => 'date'],
+            ['name' => 'Nb_Postes', 'data' => 'posts'],
+            ['name' => 'Etat', 'data' => 'status'],
+            ['name' => '?', 'data' => 'actions', 'searchable' => false]
+        ]);
+
+        return view('admin.orders.index', ['datatable' => $datatable]);
     }
 
     public function store(Request $request)

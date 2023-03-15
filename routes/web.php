@@ -18,9 +18,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/test', function () {
-    return view('test');
-})->name('clients.commandes');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
