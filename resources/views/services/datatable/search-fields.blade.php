@@ -36,7 +36,7 @@
         }
     </script>
 @endpush
-<div class="row mt-2">
+<div class="row my-2">
     @foreach (array_filter($datatable->columns, fn($column) => $column['searchable']) as $input)
         <div class="col-md-2 mb-2">
             <label class="d-block">{{ $input['name'] }} : </label>
@@ -54,11 +54,11 @@
         </div>
     @endforeach
 
-    <button type="button" class="btn btn-primary mr-2" style="align-self:end;margin-bottom:8px" onclick="search()"><i
+    <button type="button" class="btn btn-primary m-2 align-self-end" onclick="search()"><i
             class="fa-solid fa-magnifying-glass"></i>
         Rechercher</button>
 
-    <button type="button" class="btn btn-primary" style="align-self:end;margin-bottom:8px" onclick="reset()"><i
+    <button type="button" class="btn btn-primary m-2 align-self-end" onclick="reset()"><i
             class="fa-solid fa-rotate-left"></i>
         Réinitialiser</button>
 </div>
