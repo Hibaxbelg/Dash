@@ -19,7 +19,8 @@
         </div>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('doctors.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-user-doctor"></i>
@@ -29,7 +30,8 @@
             </ul>
         </nav>
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('orders.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-bars"></i>
@@ -39,7 +41,19 @@
             </ul>
         </nav>
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <li class="nav-item">
+                    <a href="{{ route('softwareVersions.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-code-fork"></i>
+                        <p>Liste des versions du programme</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <li class="nav-item">
                     <a href="#" onclick="return document.getElementById('logout-form').submit()" class="nav-link">
                         <i class="nav-icon fa-solid fa-right-from-bracket"></i>

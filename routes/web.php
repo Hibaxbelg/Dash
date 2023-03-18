@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SoftwareVersionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/doctors', 'App\Http\Controllers\DoctorController@store')
         ->name('doctors.store');
-});
 
-Route::resource('/orders', OrderController::class);
+
+    Route::resource('/orders', OrderController::class);
+    Route::resource('/softwareVersions', SoftwareVersionController::class);
+});
