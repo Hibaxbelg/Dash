@@ -15,4 +15,9 @@ class Order extends Model
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'RECORD_ID');
     }
+
+    public function softwareVersion()
+    {
+        return $this->belongsTo(SoftwareVersion::class);
+    }
 }

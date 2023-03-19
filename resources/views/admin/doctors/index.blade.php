@@ -15,6 +15,27 @@
                 })
             });
         });
+
+        let softwareVersions = @json($softwareVersions);
+
+        function calculePrice(software_id, pc_numbers) {
+            let software = softwareVersions.filter(software => software.id == software_id)[0];
+            pc_numbers = Number(pc_numbers);
+            if (pc_numbers == 0 || pc_numbers < software.min_pc_number) {
+                return 0.0;
+            }
+
+            let price = software.price;
+
+            // calculer le prix
+            let additional_pc = pc_numbers - software.min_pc_number;
+
+            if (additional_pc > 0) {
+                price += additional_pc * software.price_per_additional_pc;
+            }
+
+            return price;
+        }
     </script>
 @endpush
 
