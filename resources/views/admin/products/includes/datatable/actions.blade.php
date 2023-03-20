@@ -5,16 +5,16 @@
 
     <div class="dropdown-menu">
         <a style="cursor: pointer;" class="dropdown-item" data-toggle="modal"
-            data-target="#sotware-version-edit-{{ $row->id }}-modal">
+            data-target="#edit-product-{{ $row->id }}-modal">
             <i class="fa-solid fa-pen"></i> Modifier
         </a>
         @can('delete-order')
             <div class="dropdown-divider"></div>
             <a style="cursor: pointer;" class="dropdown-item"
-                onClick="document.getElementById('software-version-delete-{{ $row->id }}-form').submit();">
+                onClick="document.getElementById('delete-product-{{ $row->id }}-form').submit();">
                 <i class="fa-solid fa-trash"></i> Supprimer
-                <form method="post" action="{{ route('softwareVersions.destroy', $row->id) }}"
-                    id="software-version-delete-{{ $row->id }}-form" action="" style="display:none">
+                <form method="post" action="{{ route('products.destroy', $row->id) }}"
+                    id="delete-product-{{ $row->id }}-form" action="" style="display:none">
                     @csrf
                     @method('delete')
                 </form>
@@ -23,4 +23,4 @@
     </div>
 </div>
 
-@include('admin.softwareVersions.includes.datatable.modals.edit')
+@include('admin.products.includes.datatable.modals.edit')

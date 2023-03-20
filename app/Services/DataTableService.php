@@ -26,13 +26,18 @@ class DataTableService
             'type' => $options['type'] ?? 'text',
             'values' => $options['values'] ?? [],
             'searchable' => $options['searchable'] ?? true,
+            'visible' => $options['visible'] ?? true,
         ];
     }
+
 
     public function getColumns($json = false): array
     {
         if ($json) {
-            return collect($this->columns)->map(fn ($item) => collect($item)->only('data'))->toArray();
+            return collect($this->columns)
+                ->map(fn ($item) => collect($item)->only('data', 'visible'))
+                ->values()
+                ->toArray();
         }
         return $this->columns;
     }

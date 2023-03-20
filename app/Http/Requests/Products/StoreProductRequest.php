@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\SoftwareVersions;
+namespace App\Http\Requests\Products;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSoftwareVersionRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class StoreSoftwareVersionRequest extends FormRequest
             'name' => 'required',
             'min_pc_number' => 'required|integer|min:1',
             'price' => 'required|numeric|min:1|regex:/^\d+(\.\d{1,2})?$/',
-            'price_per_additional_pc' => 'required|numeric|min:1|regex:/^\d+(\.\d{1,2})?$/',
-            'tva' => 'required|numeric|min:0|max:100|regex:/^\d+(\.\d{1,2})?$/',
+            'price_per_additional_pc' => 'required|numeric|min:1|regex:/^\d+(\.\d{1,2})?$/'
         ];
     }
 }

@@ -1,20 +1,20 @@
 @pushIf(count($errors) > 0 && !Session::has('modal'), 'scripts')
 <script>
-    $("#add-software-version").modal()
+    $("#add-product").modal()
 </script>
 @endPushIf
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-software-version">
-    <i class="fa-solid fa-circle-plus"></i> Ajouter une version
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-product">
+    <i class="fa-solid fa-circle-plus"></i> Ajouter Produit
 </button>
 
-<div class="modal fade" id="add-software-version" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+<div class="modal fade" id="add-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="post" action="{{ route('softwareVersions.store') }}">
+        <form method="post" action="{{ route('products.store') }}">
             <div class="modal-content">
                 <div class="modal-header main-bg">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une version</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Ajouter produit</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -58,16 +58,6 @@
                                     value="{{ old('price_per_additional_pc') }}">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">DT</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-2">
-                            <label>TVA</label>
-                            <div class="input-group">
-                                <input type="number" min="0" max="100" class="form-control" name="tva"
-                                    value="{{ old('tva') }}">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">%</div>
                                 </div>
                             </div>
                         </div>

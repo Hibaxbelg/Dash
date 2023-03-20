@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Orders\StoreOrderRequest;
+use App\Http\Requests\Orders\UpdateOrderRequest;
 use App\Models\Doctor;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\SoftwareVersion;
+use App\Models\User;
 use App\Services\DataTableService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -14,24 +18,30 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-
         $localites = Doctor::select('LOCALITE')->distinct()->pluck('LOCALITE');
         $gouvnames = Doctor::select('gouvname')->distinct()->pluck('gouvname');
+        $users = User::all();
+        $products = Product::all();
 
         if ($request->ajax()) {
 
             $table = datatables()->of(
                 Order::query()
                     ->with('doctor:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE')
-                    ->with('softwareVersion')
-                    ->select('id', 'doctor_id', 'software_version_id', 'status', 'date', 'note', 'posts', 'price_with_tax', 'price')
+                    ->with('product')
+                    ->select('id', 'doctor_id', 'product_id', 'status', 'date', 'note', 'licenses', 'price', 'user_id', 'os', 'distance', 'payment_by')
+                    ->orderBy('status', 'desc')
             );
 
-            $table->editColumn('price_with_tax', fn ($row) => $row->price_with_tax . 'DT');
-
-            $table->addColumn('actions', fn ($row) => view('admin.orders.includes.datatable.actions', ['row' => $row]));
+            $table->addColumn('actions', fn ($row) => view('admin.orders.includes.datatable.actions', [
+                'row' => $row,
+                'users' => $users,
+                'products' => $products
+            ]));
 
             $table->addColumn('status', fn ($row) => view('admin.orders.includes.datatable.status-field', ['row' => $row]));
+
+            $table->editColumn('price', fn ($row) => $row->price . ' DT');
 
             return $table->make(true);
         }
@@ -40,49 +50,43 @@ class OrderController extends Controller
             ['name' => 'ID', 'data' => 'id'],
             ['name' => 'Nom Client', 'data' => 'doctor.FAMNAME'],
             ['name' => 'Prenom Client', 'data' => 'doctor.SHORTNAME'],
-            // ['name' => 'Localité', 'data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites],
-            // ['name' => 'GouvName', 'data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames],
-            // ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE'],
-            // ['name' => 'Note', 'data' => 'note'],
-            // ['name' => 'Date', 'data' => 'date'],
-            ['name' => 'Version Programme', 'data' => 'software_version.name'],
-            ['name' => 'Nb_Postes', 'data' => 'posts'],
-            ['name' => 'Prix', 'data' => 'price_with_tax'],
-            ['name' => 'Etat', 'data' => 'status'],
+            ['name' => 'Localité', 'data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites, 'visible' => false],
+            ['name' => 'GouvName', 'data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames, 'visible' => false],
+            ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE', 'visible' => false],
+            ['name' => 'Note', 'data' => 'note', 'visible' => false],
+            ['name' => 'Date', 'data' => 'date'],
+            ['name' => 'Produit', 'data' => 'product.name'],
+            ['name' => 'Licences', 'data' => 'licenses'],
+            ['name' => 'Prix', 'data' => 'price'],
+            ['name' => 'Etat', 'data' => 'status', 'searchable' => false, 'type' => 'select', 'values' => ['En attente', 'En cours', 'Terminé', 'Annulé']],
             ['name' => '?', 'data' => 'actions', 'searchable' => false]
         ]);
 
-        return view('admin.orders.index', ['datatable' => $datatable]);
+        return view('admin.orders.index', ['datatable' => $datatable, 'products' => $products]);
     }
 
-    public function store(Request $request)
+    public function calculatePrice(Product $product, $licenses)
     {
-        // TODO: move validation to a request class
-        $data =  $request->validate([
-            'doctor_id' => 'required|exists:doctors,RECORD_ID',
-            'software_version_id' => 'required|exists:software_versions,id',
-            'date' => 'required|date',
-            'note' => 'nullable',
-            'posts' => 'required|integer|min:1'
-        ]);
+        $price = $product->price;
 
-
-
-        $software =  SoftwareVersion::findOrFail($request->software_version_id);
-        $price = $software->price;
-
-        $additional_pc = $request->posts - $software->min_pc_number;
+        $additional_pc = $licenses - $product->min_pc_number;
 
         if ($additional_pc > 0) {
-            $price += $additional_pc * $software->price_per_additional_pc;
+            $price += $additional_pc * $product->price_per_additional_pc;
         }
 
-        $price_with_tax =  $price + ($price * $software->tva) / 100;
+        return $price;
+    }
 
-        $data['price'] = $price;
-        $data['price_with_tax'] = $price_with_tax;
+    public function store(StoreOrderRequest $request)
+    {
+        $data = $request->safe()->merge([
+            'date' => $request->date . ' ' . $request->time,
+            'price' => $this->calculatePrice(Product::find($request->product_id), $request->licenses),
+        ])->collect()->forget('time')->toArray();
 
-        Order::create($data);
+
+        $order = Order::create($data);
 
         return redirect()->route('orders.index')
             ->with([
@@ -91,35 +95,14 @@ class OrderController extends Controller
             ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateOrderRequest $request, $id)
     {
-        // TODO: move validation to a request class
-        $validator = Validator::make($request->all(), [
-            'status' => 'required',
-            'date' => 'date',
-            'note' => 'nullable',
-            'posts' => 'required|numeric|min:1'
-        ]);
+        $data = $request->safe()->merge([
+            'date' => $request->date . ' ' . $request->time,
+            'price' => $this->calculatePrice(Product::find($request->product_id), $request->licenses),
+        ])->collect()->forget('time')->toArray();
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->with([
-                    'modal' => 'order-edit-' . $id . '-modal',
-                ]);
-        }
-
-        Order::where('id', $id)->firstOrFail()->update([
-            'status' => $request->status,
-            'date' => $request->date,
-            'note' => $request->note,
-        ]);
-
-        return redirect()->route('orders.index')
-            ->with([
-                'message' => 'Commande modifiée avec succès',
-                'type' => 'success',
-            ]);
+        $order = Order::where('id', $id)->update($data);
     }
 
     public function destroy($id, Request $request)

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Doctors\StoreDoctorRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
-use App\Models\SoftwareVersion;
+use App\Models\Product;
 use App\Services\DataTableService;
 use Illuminate\Support\Facades\Gate;
 
@@ -17,7 +17,7 @@ class DoctorController extends Controller
         $gouvnames = Doctor::select('gouvname')->distinct()->pluck('gouvname');
         $localites = Doctor::select('LOCALITE')->distinct()->pluck('LOCALITE');
         $specialites = Doctor::select('SPECIALITE')->distinct()->pluck('SPECIALITE');
-        $softwareVersions = SoftwareVersion::all();
+        $products = Product::all();
 
         if ($request->ajax()) {
 
@@ -28,7 +28,7 @@ class DoctorController extends Controller
                 'gouvnames' => $gouvnames,
                 'localites' => $localites,
                 'specialites' => $specialites,
-                'softwareVersions' => $softwareVersions
+                'products' => $products
             ]));
 
             return $table->make(true);
@@ -47,7 +47,7 @@ class DoctorController extends Controller
             ['name' => '?', 'data' => 'actions', 'searchable' => false]
         ]);
 
-        return view('admin.doctors.index', ['datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites, 'softwareVersions' => $softwareVersions]);
+        return view('admin.doctors.index', ['datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites, 'products' => $products]);
     }
 
 

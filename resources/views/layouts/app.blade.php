@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
     @stack('css')
-
+    @include('includes.ajax')
     @include('includes.alert')
 
 </head>
@@ -74,6 +74,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- Page specific script -->
     @stack('scripts')

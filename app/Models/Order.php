@@ -16,8 +16,18 @@ class Order extends Model
         return $this->belongsTo(Doctor::class, 'doctor_id', 'RECORD_ID');
     }
 
-    public function softwareVersion()
+    public function product()
     {
-        return $this->belongsTo(SoftwareVersion::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeInProgress($query)
+    {
+        return $query->where('status', 'in_progress');
     }
 }

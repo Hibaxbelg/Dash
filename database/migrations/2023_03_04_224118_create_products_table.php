@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('software_versions', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('min_pc_number');
             $table->float('price', 8, 2);
             $table->float('price_per_additional_pc', 8, 2);
-            $table->float('tva', 8, 2)->default(20);
             $table->timestamps();
         });
     }

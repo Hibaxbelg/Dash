@@ -34,8 +34,15 @@
                 data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('orders.index') }}" class="nav-link">
-                        <i class="nav-icon fa-solid fa-bars"></i>
-                        <p>Liste des commandes</p>
+                        <i class="nav-icon fa-solid fa-cart-shopping"></i>
+                        <p>
+                            Liste des commandes
+                            @if (App\Models\Order::InProgress()->count() > 0)
+                                <span class="badge badge-danger right">
+                                    {{ App\Models\Order::InProgress()->count() }}
+                                </span>
+                            @endif
+                        </p>
                     </a>
                 </li>
             </ul>
@@ -44,9 +51,9 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('softwareVersions.index') }}" class="nav-link">
-                        <i class="nav-icon fa-solid fa-code-fork"></i>
-                        <p>Liste des versions du programme</p>
+                    <a href="{{ route('products.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-bars"></i>
+                        <p>Gestion des produits</p>
                     </a>
                 </li>
             </ul>
