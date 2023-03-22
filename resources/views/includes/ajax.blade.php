@@ -9,16 +9,19 @@
         errorDiv.innerHTML = '';
         submitBtn.disabled = true;
 
-        let inputs = form.querySelectorAll('input, select, textarea');
+        let inputs = form.querySelectorAll(
+            'input:not(:is([type="checkbox"], [type="radio"])),input[type="radio"]:checked,input[type="checkbox"]:checked, select, textarea'
+        );
 
-        const formData = {};
+        formData = new FormData();
+
         inputs.forEach(input => {
             const name = input.getAttribute('name');
             const value = input.value;
-            formData[name] = value;
+            formData.append(name, value);
         });
 
-        console.log(inputs);
+
 
         axios.post(url, formData).then(function(e) {
             window.location.href = redirectUrl;

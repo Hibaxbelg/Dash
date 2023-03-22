@@ -34,7 +34,10 @@ class UpdateOrderRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'note' => 'nullable',
             'payment_by' => 'required',
-            'status' => 'required|in:installed,in_progress,canceled'
+            'status' => 'required|in:installed,in_progress,canceled',
+            'formation' => 'nullable|array',
+            'formateur' => 'nullable',
+            'qualite' => 'nullable|numeric'
         ];
     }
 

@@ -10,12 +10,17 @@ use App\Models\Product;
 use App\Models\SoftwareVersion;
 use App\Models\User;
 use App\Services\DataTableService;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    public function __construct(private OrderService $orderService)
+    {
+    }
+
     public function index(Request $request)
     {
         $localites = Doctor::select('LOCALITE')->distinct()->pluck('LOCALITE');
@@ -29,19 +34,20 @@ class OrderController extends Controller
                 Order::query()
                     ->with('doctor:RECORD_ID,LOCALITE,GOUVNAME,SPECIALITE,FAMNAME,SHORTNAME,TELEPHONE')
                     ->with('product')
-                    ->select('id', 'doctor_id', 'product_id', 'status', 'date', 'note', 'licenses', 'price', 'user_id', 'os', 'distance', 'payment_by')
+                    ->select('id', 'doctor_id', 'qualite', 'formation', 'formateur', 'product_id', 'status', 'date', 'note', 'licenses', 'price', 'dep_price', 'user_id', 'os', 'distance', 'payment_by')
                     ->orderBy('status', 'desc')
             );
 
             $table->addColumn('actions', fn ($row) => view('admin.orders.includes.datatable.actions', [
                 'row' => $row,
                 'users' => $users,
-                'products' => $products
+                'gouvnames' => $gouvnames,
+                'products' => $products,
             ]));
 
             $table->addColumn('status', fn ($row) => view('admin.orders.includes.datatable.status-field', ['row' => $row]));
 
-            $table->editColumn('price', fn ($row) => $row->price . ' DT');
+            $table->editColumn('price', fn ($row) => $row->price + $row->dep_price . ' DT');
 
             return $table->make(true);
         }
@@ -62,27 +68,15 @@ class OrderController extends Controller
             ['name' => '?', 'data' => 'actions', 'searchable' => false]
         ]);
 
-        return view('admin.orders.index', ['datatable' => $datatable, 'products' => $products]);
-    }
-
-    public function calculatePrice(Product $product, $licenses)
-    {
-        $price = $product->price;
-
-        $additional_pc = $licenses - $product->min_pc_number;
-
-        if ($additional_pc > 0) {
-            $price += $additional_pc * $product->price_per_additional_pc;
-        }
-
-        return $price;
+        return view('admin.orders.index', ['datatable' => $datatable, 'products' => $products, 'prix_KM' => $this->orderService::$prix_KM]);
     }
 
     public function store(StoreOrderRequest $request)
     {
         $data = $request->safe()->merge([
             'date' => $request->date . ' ' . $request->time,
-            'price' => $this->calculatePrice(Product::find($request->product_id), $request->licenses),
+            'price' => $this->orderService->calculePrixProduct(Product::find($request->product_id), $request->licenses),
+            'dep_price' => $this->orderService->calculeFraisDeplacement($request->distance),
         ])->collect()->forget('time')->toArray();
 
 
@@ -99,7 +93,8 @@ class OrderController extends Controller
     {
         $data = $request->safe()->merge([
             'date' => $request->date . ' ' . $request->time,
-            'price' => $this->calculatePrice(Product::find($request->product_id), $request->licenses),
+            'price' => $this->orderService->calculePrixProduct(Product::find($request->product_id), $request->licenses),
+            'dep_price' => $this->orderService->calculeFraisDeplacement($request->distance),
         ])->collect()->forget('time')->toArray();
 
         $order = Order::where('id', $id)->update($data);

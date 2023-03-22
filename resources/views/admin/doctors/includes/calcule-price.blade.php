@@ -1,4 +1,11 @@
 <script>
+    function caclprixDeplacement(km) {
+        if (isNaN(km) || km <= 0) {
+            return 0;
+        }
+        return {{ $prix_KM }} * km;
+    }
+
     function calculePrice(product_id, pc_numbers) {
         let product = products.filter(p => p.id == product_id)[0];
         pc_numbers = Number(pc_numbers);

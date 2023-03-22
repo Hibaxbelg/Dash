@@ -1,7 +1,25 @@
 <script>
-    console.log("create-order-{{ $row->RECORD_ID }}");
-
     $(function() {
+
+        function aff_prix_total() {
+            let prix_deplacement = Number($("#create-order-{{ $row->RECORD_ID }} .prix_deplacement").text());
+            let prix_product = Number($("#create-order-{{ $row->RECORD_ID }} .prix").text());
+            prix = (prix_deplacement + prix_product).toFixed(2);
+
+            console.log(`prix_deplacement ${prix_deplacement}`)
+            console.log(`prix_product ${prix_product}`)
+            console.log(`prix ${prix}`)
+
+            $("#create-order-{{ $row->RECORD_ID }} .prix_total").text(prix);
+        }
+
+        $("#create-order-{{ $row->RECORD_ID }} input[name='distance']").change(function() {
+            let km = $(this).val();
+            let prix = caclprixDeplacement(km);
+            $("#create-order-{{ $row->RECORD_ID }} .prix_deplacement").text(prix);
+            aff_prix_total();
+        });
+
         $("#create-order-{{ $row->RECORD_ID }} .product-select , #create-order-{{ $row->RECORD_ID }} .pc_number")
             .change(function() {
                 let product_id = $("#create-order-{{ $row->RECORD_ID }} .product-select").val();
@@ -9,12 +27,13 @@
                 let product = products.filter(e => e.id == product_id)[0];
                 let pc_numbers = $("#create-order-{{ $row->RECORD_ID }} .pc_number").val();
 
-                let price = calculePrice(product_id, pc_numbers);
+                let price = (calculePrice(product_id, pc_numbers)).toFixed(2);
 
                 $("#create-order-{{ $row->RECORD_ID }} .prix").text(price);
 
                 let info = `${product.min_pc_number} postes aux minimum`;
                 $("#create-order-{{ $row->RECORD_ID }} .info_about_min_pc_number").text(info);
+                aff_prix_total();
             });
     });
 </script>
@@ -87,13 +106,18 @@
                                         <input type="time" class="form-control" name="time">
                                     </div>
                                     <div class="form-group">
-                                        <label>Distance :</label>
+                                        <label>Distance (en KM) :</label>
                                         <div class="input-group">
                                             <input type="number" steps="0.1" class="form-control" name="distance">
                                             <div class="input-group-prepend">
-                                                <div class="input-group-text"><i class="fa-solid fa-location-dot"></i>
+                                                <div class="input-group-text">
+                                                    <a target="_blank"
+                                                        href="https://www.google.com/maps/dir/{{ $row->ADRESSE }},{{ $row->LOCALITE }}/37.2731977,9.8683245">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                    </a>
                                                 </div>
                                             </div>
+                                            <small>{{ $row->ADRESSE }} , {{ $row->LOCALITE }}</small>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -115,9 +139,22 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>Montant à payer :</label>
+                                <label>Prix Produit :</label>
                                 <h3>
                                     <span class="prix">0.00</span> DT
+                                </h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Prix Déplacement :</label>
+                                <h3>
+                                    <span class="prix_deplacement">0.00</span> DT
+                                </h3>
+                            </div>
+                            <hr>
+                            <div class="form-group  text-danger mt-4">
+                                <label>Montant à payer :</label>
+                                <h3>
+                                    <span class="prix_total">0.00</span> DT
                                 </h3>
                             </div>
                         </div>

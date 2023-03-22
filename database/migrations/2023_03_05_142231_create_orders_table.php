@@ -21,11 +21,15 @@ return new class extends Migration
             $table->string('os');
             $table->dateTime('date');
             $table->float('distance', 8, 2);
+            $table->float('dep_price', 8, 2);
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('note')->nullable();
             $table->float('price', 8, 2);
             $table->string('payment_by');
             $table->enum('status', ['installed', 'in_progress', 'canceled'])->default('in_progress');
+            $table->string('formateur')->nullable();
+            $table->integer('qualite')->nullable();
+            $table->json('formation')->nullable();
             $table->timestamps();
             // $table->foreign('doctor_id')->references('RECORD_ID')->on('doctors')->onDelete('cascade');
         });

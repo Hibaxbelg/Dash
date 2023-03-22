@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Product;
 use App\Services\DataTableService;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\Gate;
 
 class DoctorController extends Controller
@@ -28,7 +29,7 @@ class DoctorController extends Controller
                 'gouvnames' => $gouvnames,
                 'localites' => $localites,
                 'specialites' => $specialites,
-                'products' => $products
+                'products' => $products,
             ]));
 
             return $table->make(true);
@@ -47,7 +48,10 @@ class DoctorController extends Controller
             ['name' => '?', 'data' => 'actions', 'searchable' => false]
         ]);
 
-        return view('admin.doctors.index', ['datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites, 'products' => $products]);
+        return view('admin.doctors.index', [
+            'datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites, 'products' => $products,
+            'prix_KM' => OrderService::$prix_KM
+        ]);
     }
 
 

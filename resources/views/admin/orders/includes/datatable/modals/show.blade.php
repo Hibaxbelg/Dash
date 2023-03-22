@@ -94,9 +94,22 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>Montant à payer :</label>
+                                <label>Prix Produit :</label>
                                 <h3>
                                     <span class="prix">{{ $row->price }}</span> DT
+                                </h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Prix Déplacement :</label>
+                                <h3>
+                                    <span class="prix_deplacement">{{ $row->dep_price }}</span> DT
+                                </h3>
+                            </div>
+                            <hr>
+                            <div class="form-group  text-danger mt-4">
+                                <label>Montant à payer :</label>
+                                <h3>
+                                    <span class="prix_total">{{ $row->price + $row->dep_price }}</span> DT
                                 </h3>
                             </div>
                         </div>

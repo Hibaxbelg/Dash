@@ -21,10 +21,10 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-
                                 {{ $datatable->drawTable() }}
 
                             </div>
+
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->

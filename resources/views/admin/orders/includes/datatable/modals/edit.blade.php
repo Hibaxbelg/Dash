@@ -1,5 +1,25 @@
 <script>
     $(function() {
+        function aff_prix_total() {
+            let prix_deplacement = Number($("#order-edit-{{ $row->id }}-modal .prix_deplacement")
+                .text());
+            let prix_product = Number($("#order-edit-{{ $row->id }}-modal .prix").text());
+            prix = (prix_deplacement + prix_product).toFixed(2);
+
+            console.log(`prix_deplacement ${prix_deplacement}`)
+            console.log(`prix_product ${prix_product}`)
+            console.log(`prix ${prix}`)
+
+            $("#order-edit-{{ $row->id }}-modal .prix_total").text(prix);
+        }
+
+        $("#order-edit-{{ $row->id }}-modal input[name='distance']").change(function() {
+            let km = $(this).val();
+            let prix = caclprixDeplacement(km);
+            $("#order-edit-{{ $row->id }}-modal .prix_deplacement").text(prix);
+            aff_prix_total();
+        });
+
         $("#order-edit-{{ $row->id }}-modal .product-select , #order-edit-{{ $row->id }}-modal .pc_number")
             .change(function() {
                 let product_id = $("#order-edit-{{ $row->id }}-modal .product-select").val();
@@ -7,12 +27,15 @@
                 let product = products.filter(e => e.id == product_id)[0];
                 let pc_numbers = $("#order-edit-{{ $row->id }}-modal .pc_number").val();
 
-                let price = calculePrice(product_id, pc_numbers);
+                let price = (calculePrice(product_id, pc_numbers)).toFixed(2);
 
                 $("#order-edit-{{ $row->id }}-modal .prix").text(price);
 
                 let info = `${product.min_pc_number} postes aux minimum`;
                 $("#order-edit-{{ $row->id }}-modal .info_about_min_pc_number").text(info);
+
+                aff_prix_total();
+
             });
     });
 </script>
@@ -93,7 +116,7 @@
                                             value="{{ date('H:i', strtotime($row->date)) }}">
                                     </div>
                                     <div class="form-group">
-                                        <label>Distance :</label>
+                                        <label>Distance (EN KM) :</label>
                                         <div class="input-group">
                                             <input type="number" steps="0.1" class="form-control" name="distance"
                                                 value="{{ $row->distance }}">
@@ -112,6 +135,112 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Etat :</label>
+                                        <select name="status" class="form-control">
+                                            <option @selected($row->status == 'installed') value="installed">Installé</option>
+                                            <option @selected($row->status == 'in_progress') value="in_progress">En attend</option>
+                                            <option @selected($row->status == 'canceled') value="canceled">Anulée</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Element de la formation :</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-check mt-2">
+                                                <input @checked(in_array(1, json_decode($row->formation))) name="formation[]" value="1"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Nv-Patient + TTT</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(2, json_decode($row->formation))) name="formation[]" value="2"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Nv-PatientAPCI + TTT</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(3, json_decode($row->formation))) name="formation[]" value="3"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Visualisation du bordereau - Explication du '.txt' +</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(4, json_decode($row->formation))) name="formation[]" value="4"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Exemple de suivi réguilier</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(5, json_decode($row->formation))) name="formation[]" value="5"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Base médicamenteuse et recherche</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(6, json_decode($row->formation))) name="formation[]" value="6"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Recette quotidienne / mensuelle</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(7, json_decode($row->formation))) name="formation[]" value="7"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Montrer les videos de DVD et du site</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input @checked(in_array(8, json_decode($row->formation))) name="formation[]" value="8"
+                                                    type="checkbox" class="form-check-input">
+                                                <label>Démo de Quick support</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input name="formation[]" value="9" type="checkbox"
+                                                    class="form-check-input">
+                                                <label>Insistance de contacter la HOTLINE</label>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input name="formation[]" value="10" type="checkbox"
+                                                    class="form-check-input">
+                                                <label>Générer le rapport récapitulatif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label>Formateur</label>
+                                        <input type="text" class="form-control" name="formateur"
+                                            value="{{ $row->formateur }}">
+                                    </div>
+
+
+                                    <label>Qualité :</label>
+                                    <div class="form-group form-check form-check-inline">
+                                        <input @checked($row->qualite == 1) class="form-check-input" type="radio"
+                                            value="1" name="qualite">
+                                        <label class="form-check-label">
+                                            Bonne
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <input @checked($row->qualite == 2) class="form-check-input" type="radio"
+                                            value="2" name="qualite">
+                                        <label class="form-check-label">
+                                            Acceptable
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <input @checked($row->qualite == 3) class="form-check-input" type="radio"
+                                            value="3" name="qualite">
+                                        <label class="form-check-label">
+                                            Mauvaise
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <input @checked($row->qualite == 4) class="form-check-input" type="radio"
+                                            value="4" name="qualite">
+                                        <label class="form-check-label">
+                                            Hors vue
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -123,18 +252,25 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>Etat :</label>
-                                <select name="status" class="form-control">
-                                    <option @selected($row->status == 'installed') value="installed">Installé</option>
-                                    <option @selected($row->status == 'in_progress') value="in_progress">En attend</option>
-                                    <option @selected($row->status == 'canceled') value="canceled">Anulée</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Montant à payer :</label>
-                                <h3>
-                                    <span class="prix">{{ $row->price }}</span> DT
-                                </h3>
+                                <div class="form-group">
+                                    <label>Prix Produit :</label>
+                                    <h3>
+                                        <span class="prix">{{ $row->price }}</span> DT
+                                    </h3>
+                                </div>
+                                <div class="form-group">
+                                    <label>Prix Déplacement :</label>
+                                    <h3>
+                                        <span class="prix_deplacement">{{ $row->dep_price }}</span> DT
+                                    </h3>
+                                </div>
+                                <hr>
+                                <div class="form-group  text-danger mt-4">
+                                    <label>Montant à payer :</label>
+                                    <h3>
+                                        <span class="prix_total">{{ $row->price + $row->dep_price }}</span> DT
+                                    </h3>
+                                </div>
                             </div>
                         </div>
                     </div>
