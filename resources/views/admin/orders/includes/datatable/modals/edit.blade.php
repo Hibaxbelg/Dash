@@ -149,55 +149,55 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group form-check mt-2">
-                                                <input @checked(in_array(1, json_decode($row->formation))) name="formation[]" value="1"
+                                                <input @checked(in_array(1, json_decode($row->formation ?? '[]'))) name="formation[]" value="1"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Nv-Patient + TTT</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(2, json_decode($row->formation))) name="formation[]" value="2"
+                                                <input @checked(in_array(2, json_decode($row->formation ?? '[]'))) name="formation[]" value="2"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Nv-PatientAPCI + TTT</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(3, json_decode($row->formation))) name="formation[]" value="3"
+                                                <input @checked(in_array(3, json_decode($row->formation ?? '[]'))) name="formation[]" value="3"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Visualisation du bordereau - Explication du '.txt' +</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(4, json_decode($row->formation))) name="formation[]" value="4"
+                                                <input @checked(in_array(4, json_decode($row->formation ?? '[]'))) name="formation[]" value="4"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Exemple de suivi réguilier</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(5, json_decode($row->formation))) name="formation[]" value="5"
+                                                <input @checked(in_array(5, json_decode($row->formation ?? '[]'))) name="formation[]" value="5"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Base médicamenteuse et recherche</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(6, json_decode($row->formation))) name="formation[]" value="6"
+                                                <input @checked(in_array(6, json_decode($row->formation ?? '[]'))) name="formation[]" value="6"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Recette quotidienne / mensuelle</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(7, json_decode($row->formation))) name="formation[]" value="7"
+                                                <input @checked(in_array(7, json_decode($row->formation ?? '[]'))) name="formation[]" value="7"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Montrer les videos de DVD et du site</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input @checked(in_array(8, json_decode($row->formation))) name="formation[]" value="8"
+                                                <input @checked(in_array(8, json_decode($row->formation ?? '[]'))) name="formation[]" value="8"
                                                     type="checkbox" class="form-check-input">
                                                 <label>Démo de Quick support</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input name="formation[]" value="9" type="checkbox"
-                                                    class="form-check-input">
+                                                <input @checked(in_array(9, json_decode($row->formation ?? '[]'))) name="formation[]" value="9"
+                                                    type="checkbox" class="form-check-input">
                                                 <label>Insistance de contacter la HOTLINE</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input name="formation[]" value="10" type="checkbox"
-                                                    class="form-check-input">
+                                                <input @checked(in_array(10, json_decode($row->formation ?? '[]'))) name="formation[]" value="10"
+                                                    type="checkbox" class="form-check-input">
                                                 <label>Générer le rapport récapitulatif</label>
                                             </div>
                                         </div>
