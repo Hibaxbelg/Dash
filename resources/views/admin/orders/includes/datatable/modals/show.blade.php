@@ -114,8 +114,14 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <button class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-down"></i> Télécharger le
-                                contrat</button>
+                            <form method="post" action="{{ route('contract.store') }}">
+                                @csrf
+                                <input type="hidden" name="order_id" value="{{ $row->id }}">
+                                <button class="btn btn-primary">
+                                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                                    Télécharger le contrat
+                                </button>
+                            </form>
                             <button class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-down"></i> Télécharger le
                                 bon de commande</button>
                         </div>

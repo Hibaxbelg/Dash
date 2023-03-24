@@ -1,3 +1,8 @@
 *
 !public/
 !.gitignore
+!fonts
+!fonts/*
+!contacts
+!contacts/default.png
+!contacts/default_avec_promo.png

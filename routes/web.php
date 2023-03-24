@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/orders', OrderController::class);
+    Route::resource('/contract', ContractController::class);
     Route::resource('/products', ProductController::class);
 });

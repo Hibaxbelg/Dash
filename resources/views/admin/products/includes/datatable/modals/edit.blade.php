@@ -44,6 +44,17 @@
                             </div>
                         </div>
                         <div class="col-6">
+                            <label>Prix hors promotion</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="price_without_promo"
+                                    value="{{ $row->price_without_promo }}">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">DT</div>
+                                </div>
+                            </div>
+                            <small>Laissez vide s'il n'y a pas de promotion</small>
+                        </div>
+                        <div class="col-6">
                             <label>Prix PC supplémentaire</label>
                             <div class="input-group">
                                 <input type="number" step="0.1" class="form-control" name="price_per_additional_pc"

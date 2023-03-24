@@ -11,6 +11,10 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'RECORD_ID');
