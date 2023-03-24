@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('min_pc_number');
             $table->float('price', 8, 2);
             $table->float('price_per_additional_pc', 8, 2);
+            $table->float('price_without_promo', 8, 2)->nullable();
             $table->timestamps();
         });
     }

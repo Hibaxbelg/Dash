@@ -25,7 +25,8 @@ class StoreProductRequest extends FormRequest
             'name' => 'required',
             'min_pc_number' => 'required|integer|min:1',
             'price' => 'required|numeric|min:1|regex:/^\d+(\.\d{1,2})?$/',
-            'price_per_additional_pc' => 'required|numeric|min:1|regex:/^\d+(\.\d{1,2})?$/'
+            'price_per_additional_pc' => 'required|numeric|min:1|regex:/^\d+(\.\d{1,2})?$/',
+            'price_without_promo' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/'
         ];
     }
 }

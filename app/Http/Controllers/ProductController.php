@@ -22,6 +22,7 @@ class ProductController extends Controller
             $table = datatables()::of(Product::query());
 
             $table->editColumn('price', fn ($row) => $row->price . ' DT');
+            $table->editColumn('price_without_promo', fn ($row) => $row->price_without_promo ? $row->price_without_promo . ' DT' : '');
             $table->editColumn('price_per_additional_pc', fn ($row) => $row->price_per_additional_pc . ' DT');
 
             $table->addColumn('actions', fn ($row) => view('admin.products.includes.datatable.actions', [
@@ -35,6 +36,7 @@ class ProductController extends Controller
             ['name' => 'Nom', 'data' => 'name'],
             ['name' => 'Min posts', 'data' => 'min_pc_number'],
             ['name' => 'Prix', 'data' => 'price'],
+            ['name' => 'Prix Hors Promotion', 'data' => 'price_without_promo'],
             ['name' => 'Prix PC supplémentaire', 'data' => 'price_per_additional_pc'],
             ['name' => '?', 'data' => 'actions', 'searchable' => false]
         ]);
