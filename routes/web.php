@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -40,5 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/orders', OrderController::class);
     Route::resource('/contract', ContractController::class);
+    Route::resource('/contract', ContractController::class);
+    Route::get('/bon-de-commande/{id}', [BonDeCommandeController::class, 'download'])->name('bon-de-commande');
     Route::resource('/products', ProductController::class);
 });

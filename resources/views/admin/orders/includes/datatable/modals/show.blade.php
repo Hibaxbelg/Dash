@@ -121,9 +121,11 @@
                                     <i class="fa-solid fa-cloud-arrow-down"></i>
                                     Télécharger le contrat
                                 </button>
+
+                                <a href="{{ route('bon-de-commande', $row) }}" class="btn btn-primary"><i
+                                        class="fa-solid fa-cloud-arrow-down"></i> Télécharger le
+                                    bon de commande</a>
                             </form>
-                            <button class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-down"></i> Télécharger le
-                                bon de commande</button>
                         </div>
                     </div>
                 </div>
