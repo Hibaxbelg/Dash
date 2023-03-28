@@ -12,7 +12,9 @@
         @can('delete-doctor')
             <div class="dropdown-divider"></div>
             <a style="cursor: pointer;" class="dropdown-item"
-                onClick="document.getElementById('doctor-delete-form-{{ $row->RECORD_ID }}').submit();">
+                onClick="confirm_delete(function(){
+                    document.getElementById('doctor-delete-form-{{ $row->RECORD_ID }}').submit()
+            })">
                 <i class="fa-solid fa-trash"></i> Supprimer
                 <form method="post" id="doctor-delete-form-{{ $row->RECORD_ID }}"
                     action="{{ route('doctors.destroy', $row->RECORD_ID) }}" style="display:none">

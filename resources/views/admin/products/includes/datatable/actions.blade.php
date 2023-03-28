@@ -11,7 +11,9 @@
         @can('delete-order')
             <div class="dropdown-divider"></div>
             <a style="cursor: pointer;" class="dropdown-item"
-                onClick="document.getElementById('delete-product-{{ $row->id }}-form').submit();">
+                onClick="confirm_delete(function(){
+                    document.getElementById('delete-product-{{ $row->id }}-form').submit();
+                })">
                 <i class="fa-solid fa-trash"></i> Supprimer
                 <form method="post" action="{{ route('products.destroy', $row->id) }}"
                     id="delete-product-{{ $row->id }}-form" action="" style="display:none">
