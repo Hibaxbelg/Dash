@@ -42,6 +42,9 @@ class BonDeCommandeController extends Controller
             case 1;
                 $img->text('X', 45, 750, 30, Fonts::ARIALBD);
                 break;
+            case 2;
+                $img->text('X', 352, 790, 30, Fonts::ARIALBD);
+                break;
             case 3:
                 $img->text('X', 352, 647, 30, Fonts::ARIALBD);
                 break;
@@ -76,6 +79,9 @@ class BonDeCommandeController extends Controller
         // formateur
         $img->text($order->formateur, 330, 1186, 25, Fonts::ARIAL);
         $img->text($order->licenses, 1000, 1135, 35, Fonts::ARIALBD);
+        $img->text('X', 1370, 1135, 30, Fonts::ARIALBD, $order->status == 'installed');
+        $img->text('X', 1470, 1135, 30, Fonts::ARIALBD, $order->status !== 'installed');
+
 
         // element de la formation
 
@@ -104,6 +110,7 @@ class BonDeCommandeController extends Controller
         $filename = 'bon-de-commandes/' . $order->id . '.png';
         $img->save($filename);
 
+        // return "<img src='../storage/$filename' />";
         return Storage::disk('local')->download($filename, 'bon-de-commande' . $order->id . '.png');
     }
 }
