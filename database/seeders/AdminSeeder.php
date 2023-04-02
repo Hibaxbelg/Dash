@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
                 'name' => 'Hiba',
                 'email' => 'admin@admin.com',
                 'role' => 'super-admin',
-                'password' => Hash::make('123456789')
+                'password' => '123456789'
             ]
         );
     }
