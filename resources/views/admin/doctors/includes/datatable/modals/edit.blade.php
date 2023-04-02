@@ -1,6 +1,7 @@
 <div class="modal fade edit-client-modal" id="edit-doctor-{{ $row->RECORD_ID }}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
-        <form method="post" action="{{ route('doctors.update', $row->RECORD_ID) }}">
+        <form method="post" action="{{ route('doctors.update', $row->RECORD_ID) }}"
+            onsubmit=SendRequest(event,"{{ route('doctors.update', $row->RECORD_ID) }}","{{ route('doctors.index') }}");>
             <div class="modal-content">
                 <div class="modal-header main-bg">
                     <h5 class="modal-title" id="exampleModalLongTitle">Modifier Médecin</h5>
@@ -9,13 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if (count($errors) > 0)
-                        @foreach ($errors->all() as $error)
-                            <div class="alert alert-danger">
-                                <i class="fa-solid fa-circle-xmark"></i> {{ $error }}
-                            </div>
-                        @endforeach
-                    @endif
+                    <div class="errors"></div>
                     @csrf
                     @method('patch')
                     @csrf

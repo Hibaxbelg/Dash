@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Doctors\StoreDoctorRequest;
+use App\Http\Requests\Doctors\UpdateDoctorRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Product;
@@ -71,11 +72,11 @@ class DoctorController extends Controller
             ]);
     }
 
-    public function update(Request $request, $RECORD_ID)
+    public function update(UpdateDoctorRequest $request, $RECORD_ID)
     {
 
         $doctor = Doctor::where('RECORD_ID', $RECORD_ID)
-            ->update($request->except('_token', '_method'));
+            ->update($request->validated());
 
         return redirect()->route('doctors.index')
             ->with([
