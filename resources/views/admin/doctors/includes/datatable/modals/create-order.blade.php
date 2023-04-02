@@ -117,7 +117,8 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <small>{{ $row->ADRESSE }} , {{ $row->LOCALITE }}</small>
+                                            <small class="d-block w-100">{{ $row->ADRESSE }} ,
+                                                {{ $row->LOCALITE }}</small>
                                         </div>
                                     </div>
                                     <div class="form-group">
