@@ -27,11 +27,6 @@
                         columns: export_columns
                     },
                 }, {
-                    "extend": "csv",
-                    "exportOptions": {
-                        columns: export_columns
-                    },
-                }, {
                     "extend": "excel",
                     "exportOptions": {
                         columns: export_columns
