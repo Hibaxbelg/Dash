@@ -4,6 +4,8 @@ use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,4 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/contract', ContractController::class);
     Route::get('/bon-de-commande/{id}', [BonDeCommandeController::class, 'download'])->name('bon-de-commande');
     Route::resource('/products', ProductController::class);
+    Route::resource('/users', UserController::class)->middleware('super_admin');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile', [ProfileController::class, 'update']);
 });

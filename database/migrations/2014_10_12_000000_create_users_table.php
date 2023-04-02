@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'super-admin'])->default('admin'); //champs role qui peut prend admin (par defaut) ou super amin
+            $table->enum('role', ['admin', 'super-admin'])->default('admin');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

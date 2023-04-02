@@ -9,12 +9,16 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ Auth::user()->avatar }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                 <span class="badge badge-primary"> {{ Auth::user()->role }}</span>
-
+            </div>
+            <div style="align-self: center;text-align: right;flex: 1;">
+                <a href="{{ route('profile') }}">
+                    <i class="fa-solid fa-pen text-white"></i>
+                </a>
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -54,6 +58,30 @@
                     <a href="{{ route('products.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-bars"></i>
                         <p>Gestion des produits</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        @if (Auth::user()->isSuperAdmin())
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link">
+                            <i class="nav-icon fa-solid fa-users"></i>
+                            <p>Gestion des utilisateurs</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        @endif
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <li class="nav-item">
+                    <a href="{{ route('profile') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                        <p>Modifier mon profile</p>
                     </a>
                 </li>
             </ul>
