@@ -97,7 +97,7 @@ class OrderController extends Controller
             'dep_price' => $this->orderService->calculeFraisDeplacement($request->distance),
         ])->collect()->forget('time')->toArray();
 
-        $order = Order::where('id', $id)->update($data);
+        $order = Order::find($id)->update($data);
     }
 
     public function destroy($id, Request $request)

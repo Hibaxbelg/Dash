@@ -90,7 +90,7 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
 
-        Product::where('id', $id)->update($validated);
+        Product::find($id)->update($validated);
 
         return redirect()->route('products.index')->with([
             'message' => 'Product modifiée avec succès',
@@ -103,7 +103,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        Product::where('id', $id)->delete();
+        Product::find($id)->delete();
 
         return redirect()->route('products.index')->with([
             'message' => 'Product supprimée avec succès',

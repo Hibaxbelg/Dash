@@ -63,7 +63,7 @@ class DoctorController extends Controller
             abort(403);
         }
 
-        Doctor::where('RECORD_ID', $RECORD_ID)->delete();
+        Doctor::find($RECORD_ID)->delete();
 
         return redirect()->route('doctors.index')
             ->with([
@@ -75,7 +75,7 @@ class DoctorController extends Controller
     public function update(UpdateDoctorRequest $request, $RECORD_ID)
     {
 
-        $doctor = Doctor::where('RECORD_ID', $RECORD_ID)
+        $doctor = Doctor::find($RECORD_ID)
             ->update($request->validated());
 
         return redirect()->route('doctors.index')
