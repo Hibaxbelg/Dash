@@ -46,8 +46,13 @@
             @else
                 <select class="datatable-filter form-control select2bs4" data-column-id="{{ $input['id'] }}"">
                     <option value="">Choisir</option>
-                    @foreach ($input['values'] as $value)
-                        <option value=" {{ $value }}">{{ $value }}</option>
+                    @foreach ($input['values'] as $key => $value)
+                        @php
+                            $input_value = is_array($input['values']) ? $key : $value;
+                        @endphp
+                        <option value="{{ $input_value }}">
+                            {{ $value }}
+                        </option>
                     @endforeach
                 </select>
             @endif
