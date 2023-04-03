@@ -15,11 +15,11 @@
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                 <span class="badge badge-primary"> {{ Auth::user()->role }}</span>
             </div>
-            <div style="align-self: center;text-align: right;flex: 1;">
+            {{-- <div style="align-self: center;text-align: right;flex: 1;">
                 <a href="{{ route('profile') }}">
                     <i class="fa-solid fa-pen text-white"></i>
                 </a>
-            </div>
+            </div> --}}
         </div>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -75,32 +75,6 @@
                 </ul>
             </nav>
         @endif
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
-                <li class="nav-item">
-                    <a href="{{ route('profile') }}" class="nav-link">
-                        <i class="nav-icon fa-solid fa-user-pen"></i>
-                        <p>Modifier mon profile</p>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
-                <li class="nav-item">
-                    <a href="#" onclick="return document.getElementById('logout-form').submit()" class="nav-link">
-                        <i class="nav-icon fa-solid fa-right-from-bracket"></i>
-                        <p>Se déconnecter</p>
-                    </a>
-                    <form action="{{ route('logout') }}" id="logout-form" method="post" style="display:none">
-                        @csrf
-                        <button type="submit"></button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
