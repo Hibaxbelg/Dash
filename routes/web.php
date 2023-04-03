@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActionController;
 use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\OrderController;
@@ -49,4 +50,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users', UserController::class)->middleware('super_admin');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'update']);
+
+    Route::get('actions', [ActionController::class, 'index'])->name('actions')->middleware('super_admin');
 });
