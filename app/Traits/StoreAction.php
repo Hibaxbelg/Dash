@@ -30,7 +30,7 @@ trait StoreAction
             'user_id' => Auth::user()->id,
             'model_type' => get_class($this),
             'model_id' => $this->getKey(),
-            'actions' => $action,
+            'action' => $action,
             'previous_data' => $previousData ? json_encode($previousData) : null,
         ];
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('model_type');
             $table->unsignedBigInteger('model_id');
-            $table->enum('actions', ['create', 'update', 'delete']);
+            $table->enum('action', ['create', 'update', 'delete']);
             $table->json('previous_data')->nullable();
             $table->timestamps();
         });
