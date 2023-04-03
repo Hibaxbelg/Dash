@@ -37,8 +37,15 @@ class UserController extends Controller
             ['name' => 'Photo', 'data' => 'avatar'],
             ['name' => 'Nom', 'data' => 'name'],
             ['name' => 'Email', 'data' => 'email'],
-            ['name' => 'Role', 'data' => 'role', 'searchable' => false],
-            ['name' => 'Status', 'data' => 'is_active', 'searchable' => false],
+            [
+                'name' => 'Role', 'data' => 'role', 'type' => 'select', 'values' => ['admin' => 'admin', 'super-admin' => 'super-admin'],
+            ],
+            [
+                'name' => 'Status', 'data' => 'is_active', 'type' => 'select', 'values' => [
+                    '1' => 'Compte Activé',
+                    '0' => 'Compte Desactivé',
+                ],
+            ],
             ['name' => 'Date Creation', 'data' => 'created_at', 'searchable' => false],
             ['name' => 'Date Modification', 'data' => 'updated_at', 'searchable' => false],
             ['name' => '?', 'data' => 'actions', 'searchable' => false]
