@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB; //importer class DB
 use Illuminate\Support\Facades\Hash; //importer class Hash
@@ -14,14 +15,13 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        DB::table('users')->insert(
-            [
+        User::withoutEvents(function () {
+            User::create([
                 'name' => 'Hiba',
                 'email' => 'admin@admin.com',
                 'role' => 'super-admin',
-                'password' => Hash::make('123456789')
-            ]
-        );
+                'password' => '123456789',
+            ]);
+        });
     }
 }
