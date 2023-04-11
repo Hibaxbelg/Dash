@@ -44,13 +44,7 @@ class ProductController extends Controller
         return view('admin.products.index', ['datatable' => $datatable]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.

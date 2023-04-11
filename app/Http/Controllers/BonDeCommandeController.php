@@ -25,6 +25,9 @@ class BonDeCommandeController extends Controller
         $img->text($order->created_at->format('d. m .Y'), 195, 125, 25, Fonts::ARIAL);
         $img->text($order->created_at->format('d. m .Y'), 195, 165, 25, Fonts::ARIAL);
 
+        $img->text('Cle d\'installation :' . $order->installation_key, 1070, 137, 25, Fonts::ARIALBD);
+
+
         $img->text($order->doctor->FAMNAME . ' ' . $order->doctor->SHORTNAME, 255, 285, 50, Fonts::ARIALBD);
         $img->text($order->doctor->CNAMID, 1125, 275, 25, Fonts::ARIAL);
         $img->text($order->doctor->SPECIALITE, 255, 327, 25, Fonts::ARIAL);

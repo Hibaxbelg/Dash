@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('doctor_id');
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->string('installation_key');
             $table->integer('licenses');
             $table->string('os');
             $table->dateTime('date');

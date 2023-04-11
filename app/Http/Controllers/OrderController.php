@@ -80,6 +80,8 @@ class OrderController extends Controller
         ])->collect()->forget('time')->toArray();
 
 
+        $data['installation_key'] = str()->random(4) . '-' . str()->random(4) . '-' . str()->random(4) . '-' . str()->random(4);
+
         $order = Order::create($data);
 
         return redirect()->route('orders.index')
