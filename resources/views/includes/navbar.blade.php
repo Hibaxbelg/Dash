@@ -22,7 +22,7 @@
                     <i class="fa-solid fa-user-pen"></i> Modifier mon profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="{{ route('logout') }}" onclick="return document.getElementById('logout-form').submit()"
+                <a href="#" onclick="return document.getElementById('logout-form').submit()"
                     class="dropdown-item">
                     <i class=" fa-solid fa-right-from-bracket"></i> Se Déconnecter
                 </a>
