@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -52,4 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update']);
 
     Route::get('actions', [ActionController::class, 'index'])->name('actions')->middleware('super_admin');
+
+    Route::get('/installations', [InstallationController::class, 'index'])->name('installations.index');
+    Route::post('/installations/update-order-status', [InstallationController::class, 'updateOrderStatus'])
+        ->name('installations.update-order-status');
 });

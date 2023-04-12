@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('product_installations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Order::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Doctor::class)->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('doctor_id')->nullable();
             $table->string('hdid');
             $table->string('cpui');
             $table->timestamps();

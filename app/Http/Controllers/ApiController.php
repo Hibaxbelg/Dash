@@ -12,6 +12,7 @@ class ApiController extends Controller
 {
     public function store(InstallationRequest $request)
     {
+        $doctor_id = Doctor::where('CNAMID', $request->cnamid)->first()->RECORD_ID;
         // le medecin dispose d'un code d'installation
         if ($request->has('key')) {
 
@@ -49,7 +50,7 @@ class ApiController extends Controller
 
                 ProductInstallation::create([
                     'order_id' => $order->id,
-                    'doctor_id' => Doctor::where('CNAMID', $request->cnamid)->first()->id,
+                    'doctor_id' => $doctor_id,
                     'hdid' => $request->hdid,
                     'cpui' => $request->cpui,
                 ]);
@@ -77,7 +78,7 @@ class ApiController extends Controller
             }
 
             ProductInstallation::create([
-                'doctor_id' => Doctor::where('CNAMID', $request->cnamid)->first()->id,
+                'doctor_id' => $doctor_id,
                 'hdid' => $request->hdid,
                 'cpui' => $request->cpui,
             ]);
