@@ -31,6 +31,11 @@
                                             disabled>
                                     </div>
                                     <div class="form-group">
+                                        <label>CnamID:</label>
+                                        <input type="text" value="{{ $row->doctor->CNAMID }}" class="form-control"
+                                            disabled>
+                                    </div>
+                                    <div class="form-group">
                                         <label>Localité :</label>
                                         <input type="text" value="{{ $row->doctor->LOCALITE }}" class="form-control"
                                             disabled>

@@ -27,7 +27,7 @@ class ActionController extends Controller
         }
 
         $datatable = new DataTableService([
-            ['name' => 'ID', 'data' => 'id'],
+            ['name' => 'ID', 'data' => 'id', 'searchable' => false],
             ['name' => 'L\'utilisateur', 'data' => 'user.name'],
             ['name' => 'Resource', 'data' => 'model_type'],
             [

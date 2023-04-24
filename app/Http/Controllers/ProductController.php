@@ -38,7 +38,7 @@ class ProductController extends Controller
             ['name' => 'Prix', 'data' => 'price'],
             ['name' => 'Prix Hors Promotion', 'data' => 'price_without_promo'],
             ['name' => 'Prix PC supplémentaire', 'data' => 'price_per_additional_pc'],
-            ['name' => '?', 'data' => 'actions', 'searchable' => false]
+            ['name' => 'Action', 'data' => 'actions', 'searchable' => false]
         ]);
 
         return view('admin.products.index', ['datatable' => $datatable]);
@@ -100,7 +100,7 @@ class ProductController extends Controller
         Product::find($id)->delete();
 
         return redirect()->route('products.index')->with([
-            'message' => 'Product supprimée avec succès',
+            'message' => 'Produit supprimé avec succès',
             'type' => 'success'
         ]);
     }

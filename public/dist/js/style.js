@@ -25,7 +25,7 @@ function checkStuff() {
 
   if (email.value == "") {
     msg.style.display = 'block';
-    msg.innerHTML = "Entrer votre email";
+    msg.innerHTML = "veuillez saisir un Email ";
     email.focus();
     return false;
   } else {
@@ -33,20 +33,13 @@ function checkStuff() {
   }
 
    if (password.value == "") {
-    msg.innerHTML = "Entrer votre mot de passe";
+    msg.innerHTML = "veuillez saisir un mot de passe";
     password.focus();
     return false;
   } else {
     msg.innerHTML = "";
   }
-   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (!re.test(email.value)) {
-    msg.innerHTML = "Entrez une adresse e-mail valide SVP";
-    email.focus();
-    return false;
-  } else {
-    msg.innerHTML = "";
-  }
+
 }
 
 // ParticlesJS

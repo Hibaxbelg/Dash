@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 <body>
 
     <div id="particles-js"></div>
-    {{-- <div class="animated bounceInDown"> --}}
+
     <div class="container">
         @if (count($errors))
             <span class="error animated tada" id="msg" style="display: inline-block;height:auto">
@@ -22,14 +22,9 @@
             </span>
         @endif
 
-        @if (session()->has('error'))
-            <span class="error animated tada" id="msg" style="display: inline-block;height:auto">
-                {{ session()->get('error') }}
-            </span>
-        @endif
 
         <form method="POST" name="form1" class="box" onsubmit="return checkStuff()" action="{{ route('login') }}">
-            <!-- protect against cross-site request forgery attacks -->
+
             @csrf
             <!-- form inputs here -->
             <h4>Esib<span>Dashboard</span></h4>
@@ -42,22 +37,22 @@
                 <i id="hide1" class="fa fa-eye"></i>
                 <i id="hide2" class="fa fa-eye-slash"></i>
             </span>
-            <input type="password" name="password" placeholder="Passsword" id="pwd" autocomplete="off"
+            <input type="password" name="password" placeholder="Mot de passe" id="pwd" autocomplete="off"
                 name="password" placeholder="{{ __('Password') }}" autocomplete="current-password">
 
             <label>
-                <input {{ old('remember') ? 'checked' : '' }} type="checkbox">
+                <input {{ old('remember') ? 'checked' : '' }} type="checkbox" name="remember">
                 <span></span>
                 <small class="rmb">Remember me</small>
             </label>
-            <input type="submit" value="Connecter" class="btn1">
+            <input type="submit" value="Se connecter" class="btn1">
 
 
         </form>
 
     </div>
 
-    {{-- </div> --}}
+
 
 
 

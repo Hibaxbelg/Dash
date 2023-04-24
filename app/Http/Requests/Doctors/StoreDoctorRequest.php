@@ -33,4 +33,5 @@ class StoreDoctorRequest extends FormRequest
             'TELEPHONE' => 'required|numeric|digits:8',
         ];
     }
+
 }

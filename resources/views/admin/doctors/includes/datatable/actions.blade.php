@@ -9,7 +9,7 @@
             <i class="fa-solid fa-user-pen"></i> Modifier
         </a>
 
-        @can('delete-doctor')
+
             <div class="dropdown-divider"></div>
             <a style="cursor: pointer;" class="dropdown-item"
                 onClick="confirm_delete(function(){
@@ -23,7 +23,7 @@
                     <button></button>
                 </form>
             </a>
-        @endcan
+
         <div class="dropdown-divider"></div>
         <a style="cursor: pointer;" class="dropdown-item" data-toggle="modal"
             data-target="#create-order-{{ $row->RECORD_ID }}">

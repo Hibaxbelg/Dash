@@ -5,6 +5,7 @@ use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReclamationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -26,10 +27,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 // user has been authenticated to access these pages
 Route::middleware('auth')->group(function () {
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class,'index'])->name('home');
+
     Route::get('/doctors', 'App\Http\Controllers\DoctorController@index')
         ->name('doctors.index');
 
@@ -44,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/orders', OrderController::class);
+    Route::resource('/reclamations', ReclamationController::class);
     Route::resource('/contract', ContractController::class);
     Route::resource('/contract', ContractController::class);
     Route::get('/bon-de-commande/{id}', [BonDeCommandeController::class, 'download'])->name('bon-de-commande');
