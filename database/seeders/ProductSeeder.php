@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Run the database seeds.
      */
@@ -26,21 +28,21 @@ class ProductSeeder extends Seeder
             'min_pc_number' => 1,
             'price' => 500,
             'price_without_promo' => 800,
-            'price_per_additional_pc' => 200
+            'price_per_additional_pc' => 200,
         ]);
 
         Product::create([
             'name' => 'Medwin Radio',
             'min_pc_number' => 2,
             'price' => 600,
-            'price_per_additional_pc' => 200
+            'price_per_additional_pc' => 200,
         ]);
 
         Product::create([
             'name' => 'Medwin Ophta',
             'min_pc_number' => 2,
             'price' => 600,
-            'price_per_additional_pc' => 200
+            'price_per_additional_pc' => 200,
         ]);
     }
 }
