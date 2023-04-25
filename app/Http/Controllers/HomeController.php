@@ -38,16 +38,29 @@ class HomeController extends Controller
             ->orderBy('order_count', 'desc')
             ->get();
 
+        $qualites = [
+            1 => ['name' => 'bonne', 'icon' => '<i style="color:#00b894" class="fa-3x fa-solid fa-face-laugh-beam"></i>', 'count' => 0],
+            2 => ['name' => 'Acceptable', 'icon' => '<i style="color:#00cec9" class="fa-3x fa-solid fa-face-smile"></i>', 'count' => 0],
+            3 => ['name' => 'Mauvaise', 'icon' => '<i style="color:#e17055" class="fa-3x fa-solid fa-face-frown"></i>', 'count' => 0],
+            4 => ['name' => 'Hors vue', 'icon' => '<i style="color:#d63031" class="fa-3x fa-sharp fa-solid fa-face-sad-cry"></i>', 'count' => 0],
+        ];
+
+        $order_qualites = Order::selectRaw('qualite , count(*) as count')
+            ->whereNotNull('qualite')
+            ->groupBy('qualite')
+            ->get();
+
+        foreach ($qualites as $key => $value) {
+            $qualites[$key]['count'] = $order_qualites->where('qualite', $key)->first()->count ?? 0;
+        }
+
         return view('home', [
             'orders_count' => $orders_count,
             'demo_count' => $demo_count,
             'users_count' => $users_count,
             'orders_this_week' => $orders_this_week,
             'products_order_counts' => $products_order_counts,
-            // 'doctors_gov' => $doctors_gov,
-            // 'doctors_spec' => $doctors_spec,
-            // 'labo_orders' => $labo_orders,
-            // 'products' => $products,
+            'qualites' => $qualites,
         ]);
     }
 }

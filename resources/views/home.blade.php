@@ -210,6 +210,29 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-header bg-primary">
+                                <i class="fa-regular fa-handshake"></i> Avis des clients
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    @foreach ($qualites as $qualite)
+                                        <div class="col-md-3 text-center">
+                                            <h2> {{ $qualite['count'] }} <sup>
+                                                    <small style="color:gray;font-size:13px">
+
+                                                        {{ number_format(((float) $qualite['count'] * 100) / collect($qualites)->sum('count'), 2, '.', '') }}
+                                                        %
+                                                    </small>
+                                                </sup>
+                                            </h2>
+                                            {!! $qualite['icon'] !!}
+                                            <h5 class="mt-2">{{ $qualite['name'] }}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
