@@ -26,6 +26,17 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-house"></i>
+                        <p>Accueil</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <li class="nav-item">
                     <a href="{{ route('doctors.index') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-user-doctor"></i>
                         <p>Liste des médecins</p>
@@ -122,6 +133,17 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <li class="nav-item">
+                    <a href="{{ route('statistics.index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-chart-area"></i>
+                        <p>Statistiques</p>
+                    </a>
                 </li>
             </ul>
         </nav>

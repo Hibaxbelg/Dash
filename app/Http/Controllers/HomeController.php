@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\ProductInstallation;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -23,6 +16,38 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (!Auth::check()) {
+            return view('auth.login');
+        }
+
+        $orders_count = Order::count();
+        $demo_count = ProductInstallation::whereNull('order_id')->count();
+        $users_count = ProductInstallation::whereNotNull('order_id')->count();
+
+        $orders_this_week = Order::where('status', 'in_progress')
+            ->whereBetween('date', [now()->subWeek(), now()])
+            ->with('doctor', 'product')
+            ->limit(7)
+            ->orderBy('date', 'asc')
+            ->get();
+
+        $products_order_counts = Order::join('products', 'products.id', '=', 'orders.product_id')
+            ->groupBy('products.name')
+            ->select('products.name')
+            ->selectRaw('count(*) as order_count')
+            ->orderBy('order_count', 'desc')
+            ->get();
+
+        return view('home', [
+            'orders_count' => $orders_count,
+            'demo_count' => $demo_count,
+            'users_count' => $users_count,
+            'orders_this_week' => $orders_this_week,
+            'products_order_counts' => $products_order_counts,
+            // 'doctors_gov' => $doctors_gov,
+            // 'doctors_spec' => $doctors_spec,
+            // 'labo_orders' => $labo_orders,
+            // 'products' => $products,
+        ]);
     }
 }

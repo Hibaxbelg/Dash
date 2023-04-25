@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\StatisticController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-*/
+ */
 
 Route::post('installation', [ApiController::class, 'store']);
+
+Route::get('/statistics/orders', [StatisticController::class, 'orders'])->name('statistics.orders');

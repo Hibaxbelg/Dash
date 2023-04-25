@@ -13,4 +13,9 @@ class Doctor extends Model
     protected $primaryKey = 'RECORD_ID';
 
     protected $guarded = [];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'doctor_id', 'RECORD_ID');
+    }
 }

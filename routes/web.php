@@ -3,10 +3,12 @@
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -42,7 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/doctors', 'App\Http\Controllers\DoctorController@store')
         ->name('doctors.store');
 
-
     Route::resource('/orders', OrderController::class);
     Route::resource('/contract', ContractController::class);
     Route::resource('/contract', ContractController::class);
@@ -57,4 +55,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/installations', [InstallationController::class, 'index'])->name('installations.index');
     Route::post('/installations/update-order-status', [InstallationController::class, 'updateOrderStatus'])
         ->name('installations.update-order-status');
+
+    Route::get('/statistics', [StatisticController::class, 'index'])->name('statistics.index');
 });
