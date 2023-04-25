@@ -46,7 +46,7 @@ class DoctorController extends Controller
             ['name' => 'Localité', 'data' => 'LOCALITE', 'type' => 'select', 'values' => $localites],
             ['name' => 'Tél', 'data' => 'TELEPHONE'],
             ['name' => 'Gsm', 'data' => 'GSM'],
-            ['name' => '?', 'data' => 'actions', 'searchable' => false]
+            ['name' => 'Action', 'data' => 'actions', 'searchable' => false]
         ]);
 
         return view('admin.doctors.index', [
@@ -58,10 +58,6 @@ class DoctorController extends Controller
 
     public function destroy($RECORD_ID)
     {
-
-        if (!Gate::allows('delete-doctor')) {
-            abort(403);
-        }
 
         Doctor::find($RECORD_ID)->delete();
 

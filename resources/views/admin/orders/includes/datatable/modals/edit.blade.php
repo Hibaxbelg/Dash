@@ -139,7 +139,7 @@
                                         <label>Etat :</label>
                                         <select name="status" class="form-control">
                                             <option @selected($row->status == 'installed') value="installed">Installé</option>
-                                            <option @selected($row->status == 'in_progress') value="in_progress">En attend</option>
+                                            <option @selected($row->status == 'in_progress') value="in_progress">En attente</option>
                                             <option @selected($row->status == 'canceled') value="canceled">Anulée</option>
                                         </select>
                                     </div>
@@ -276,8 +276,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-primary">Modifier</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
                 </div>
             </form>
         </div>

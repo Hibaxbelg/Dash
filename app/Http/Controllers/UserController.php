@@ -33,8 +33,8 @@ class UserController extends Controller
         }
 
         $datatable = new DataTableService([
-            ['name' => 'ID', 'data' => 'id'],
-            ['name' => 'Photo', 'data' => 'avatar'],
+            ['name' => 'ID', 'data' => 'id', 'searchable' => false],
+            ['name' => 'Photo', 'data' => 'avatar', 'searchable' => false],
             ['name' => 'Nom', 'data' => 'name'],
             ['name' => 'Email', 'data' => 'email'],
             [
@@ -48,7 +48,7 @@ class UserController extends Controller
             ],
             ['name' => 'Date Creation', 'data' => 'created_at', 'searchable' => false],
             ['name' => 'Date Modification', 'data' => 'updated_at', 'searchable' => false],
-            ['name' => '?', 'data' => 'actions', 'searchable' => false]
+            ['name' => 'Action', 'data' => 'actions', 'searchable' => false]
         ]);
 
         return view('admin.users.index', ['datatable' => $datatable]);

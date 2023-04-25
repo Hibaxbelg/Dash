@@ -8,7 +8,7 @@
             data-target="#edit-product-{{ $row->id }}-modal">
             <i class="fa-solid fa-pen"></i> Modifier
         </a>
-        @can('delete-order')
+
             <div class="dropdown-divider"></div>
             <a style="cursor: pointer;" class="dropdown-item"
                 onClick="confirm_delete(function(){
@@ -21,7 +21,7 @@
                     @method('delete')
                 </form>
             </a>
-        @endcan
+
     </div>
 </div>
 
