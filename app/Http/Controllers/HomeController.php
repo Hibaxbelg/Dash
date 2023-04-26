@@ -96,6 +96,8 @@ class HomeController extends Controller
             }
         }
 
+        // dd($reclamations_responses_in_minutes_per_day);
+
         return view('home', [
             'orders_count' => $orders_count,
             'demo_count' => $demo_count,

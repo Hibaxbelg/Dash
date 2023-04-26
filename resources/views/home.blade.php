@@ -77,6 +77,78 @@
             getOrdersByMonth(this.value);
         });
     </script>
+
+    <script>
+        let reclamationsChart = new Chart($('#reclamations-chart').get(0).getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Temps en minutes',
+                    data: [],
+                    fill: true,
+                    backgroundColor: '#6777ef',
+                    // borderColor: '6777ef'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        })
+
+        let reclamations_select_month = document.getElementById('reclamations_select_month');
+
+        function getReclamationsByMonth(month) {
+            reclamations_select_month.value = month;
+            let year = new Date().getFullYear();
+
+            const daysInThisMonth = new Date(year, month, 0).getDate();
+
+            let dates = [];
+            let response_in_minutes = [];
+
+            for (let i = 1; i <= daysInThisMonth; i++) {
+                dates.push(`${i.toString().padStart(2,'0')}/${(month).toString().padStart(2,'0')}`);
+                response_in_minutes.push(0);
+            }
+            console.log(dates);
+            axios.get("{{ route('statistics.reclamations') }}?month=" + month).then(response => {
+                let data = response.data;
+                console.log(data);
+                // console.log(data);
+
+                data.forEach(el => {
+                    let _d = new Date(el.date);
+                    el.date = (_d.getDate()).toString().padStart(2, '0') + '/' + (_d.getMonth() + 1)
+                        .toString().padStart(2, '0');
+                });
+                console.log(data);
+                // console.log(data);
+                data.forEach(el => {
+                    console.log(`Search for ${el.date}`)
+                    let index = dates.findIndex((date) => date === el.date);
+                    console.log(index);
+                    response_in_minutes[index] = el.response_in_minutes;
+                });
+                reclamationsChart.data.labels = dates;
+                reclamationsChart.data.datasets[0].data = response_in_minutes;
+                reclamationsChart.update();
+            })
+        }
+
+        getReclamationsByMonth(new Date().getMonth() + 1);
+
+        reclamations_select_month.addEventListener('change', function() {
+            getReclamationsByMonth(this.value);
+        });
+    </script>
 @endpush
 
 
@@ -270,6 +342,35 @@
                         </select>
 
                         <canvas id="orders-chart"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">
+                        </canvas>
+
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <i class="fa-solid fa-chart-area"></i> Temps moyen pour répondre aux réclamations
+                    </div>
+                    <div class="card-body">
+                        <select class="form-control" name="month" id="reclamations_select_month"
+                            style="max-width:200px">
+                            <option value="1">Janvier</option>
+                            <option value="2">Février</option>
+                            <option value="3">Mars</option>
+                            <option value="4">Avril</option>
+                            <option value="5">Mai</option>
+                            <option value="6">Juin</option>
+                            <option value="7">Juillet</option>
+                            <option value="8">Août</option>
+                            <option value="9">Septembre</option>
+                            <option value="10">Octobre</option>
+                            <option value="11">Novembre</option>
+                            <option value="12">Décembre</option>
+                        </select>
+
+                        <canvas id="reclamations-chart"
                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">
                         </canvas>
 

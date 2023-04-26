@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Reclamation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -104,5 +105,37 @@ class StatisticController extends Controller
             ->get();
 
         return $orders;
+    }
+
+    public function reclamations(Request $request)
+    {
+
+        $reclamations_responses_in_minutes_per_day = [];
+        $month = request('month') ?? Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+
+        $reclamations = Reclamation::whereBetween('created_at', [$startDate, $endDate])->get();
+        $data = [];
+        foreach ($reclamations as $reclamation) {
+            $reclamations_responses_in_minutes_per_day[$reclamation->updated_at->format('Y-m-d')][] = $reclamation->updated_at->diffInMinutes($reclamation->created_at);
+        }
+
+        foreach ($reclamations_responses_in_minutes_per_day as $key => $value) {
+
+            $sum = 0;
+            foreach ($reclamations_responses_in_minutes_per_day[$key] as $key2 => $value2) {
+                // $reclamations_responses_in_minutes_per_day[$key][$key2] = $value2 / 60;
+                $sum += $value2;
+            }
+
+            $data[] = [
+                'date' => $key,
+                'response_in_minutes' => $sum,
+            ];
+        }
+
+        return $data;
     }
 }

@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::post('installation', [ApiController::class, 'store']);
 
 Route::get('/statistics/orders', [StatisticController::class, 'orders'])->name('statistics.orders');
+Route::get('/statistics/reclamations', [StatisticController::class, 'reclamations'])->name('statistics.reclamations');
