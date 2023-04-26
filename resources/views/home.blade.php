@@ -233,6 +233,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-header bg-primary">
+                                <i class="fa-regular fa-handshake"></i> Temps moyen pour répondre aux réclamations
+                            </div>
+                            <div class="card-body">
+                                <div class=" text-center">
+                                    <h3>
+                                        <i class="fa-regular fa-clock"></i>
+                                        {{ $reclamation_response_average_time }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

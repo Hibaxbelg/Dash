@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\ProductInstallation;
+use App\Models\Reclamation;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -54,6 +55,47 @@ class HomeController extends Controller
             $qualites[$key]['count'] = $order_qualites->where('qualite', $key)->first()->count ?? 0;
         }
 
+        $reclamations_responses_in_minutes = [];
+
+        $reclamations = Reclamation::select('created_at', 'updated_at')->get();
+
+        foreach ($reclamations as $reclamation) {
+            $reclamations_responses_in_minutes[] = $reclamation->updated_at->diffInMinutes($reclamation->created_at);
+        }
+
+        $average_time_minutes = array_sum($reclamations_responses_in_minutes) / count($reclamations_responses_in_minutes);
+
+        if ($average_time_minutes < 60) {
+            if ($average_time_minutes == 1) {
+                $average_time_text = "1 minute";
+            } else {
+                $average_time_text = $average_time_minutes . " minutes";
+            }
+        } else {
+            $hours = floor($average_time_minutes / 60);
+            $minutes = $average_time_minutes % 60;
+
+            if ($hours == 1) {
+                $hours_text = "1 heure";
+            } else {
+                $hours_text = "$hours heures";
+            }
+
+            if ($minutes == 1) {
+                $minutes_text = "1 minute";
+            } elseif ($minutes == 0) {
+                $minutes_text = "";
+            } else {
+                $minutes_text = "$minutes minutes";
+            }
+
+            $average_time_text = $hours_text;
+
+            if (!empty($minutes_text)) {
+                $average_time_text .= " et " . $minutes_text;
+            }
+        }
+
         return view('home', [
             'orders_count' => $orders_count,
             'demo_count' => $demo_count,
@@ -61,6 +103,7 @@ class HomeController extends Controller
             'orders_this_week' => $orders_this_week,
             'products_order_counts' => $products_order_counts,
             'qualites' => $qualites,
+            'reclamation_response_average_time' => $average_time_text,
         ]);
     }
 }
