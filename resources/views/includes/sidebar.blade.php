@@ -84,6 +84,30 @@
                 </li>
             </ul>
         </nav>
+        @if (Auth::user()->isSuperAdmin())
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link">
+                            <i class="nav-icon fa-solid fa-users"></i>
+                            <p>Gestion des utilisateurs</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item">
+                        <a href="{{ route('actions') }}" class="nav-link">
+                            <i class="nav-icon fa-solid fa-clock-rotate-left"></i>
+                            <p>Consulter les Tracabilités </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        @endif
         <nav>
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
