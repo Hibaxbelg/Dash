@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\ProductInstallation;
+use App\Models\Reclamation;
 use App\Services\StatisticService;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,6 +42,7 @@ class HomeController extends Controller
             'orders_count' => $orders_count,
             'demo_count' => $demo_count,
             'users_count' => $users_count,
+            'resolved_tickets' => Reclamation::where('status', 'resolved')->count(),
             'orders_this_week' => $orders_this_week,
             'products_order_counts' => $products_order_counts,
             'qualites' => $this->statisticService->ordersQuality(),

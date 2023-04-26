@@ -206,13 +206,13 @@
 
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>X</h3>
+                                <h3>{{ $resolved_tickets }}</h3>
                                 <p>Tickets résolus</p>
                             </div>
                             <div class="icon">
                                 <i class="icon fa-solid fa-circle-check"></i>
                             </div>
-                            <a href="" class="small-box-footer">Afficher <i
+                            <a href="{{ route('reclamations.index') }}" class="small-box-footer">Afficher <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
