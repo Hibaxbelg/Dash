@@ -45,7 +45,8 @@
                         <div class="col-6">
                             <label>description :</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="description" value="{{ old('description') }}">
+                                <input type="text" class="form-control" name="description"
+                                    value="{{ old('description') }}">
                             </div>
                         </div>
                         <div class="form-group">

@@ -2,7 +2,7 @@
 
 @section('title', 'Liste des réclamations')
 
-@include('includes.datatable', [ 'AJAX_URL' => route('reclamations.index')])
+@include('includes.datatable', ['AJAX_URL' => route('reclamations.index')])
 
 @section('content')
     <div class="content-wrapper">

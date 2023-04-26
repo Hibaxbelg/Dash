@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label>solution</label>
                                 <input type="text" min="1" class="form-control" name="solution"
-                                    value="{{ $row->solution }}" >
+                                    value="{{ $row->solution }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -39,8 +39,8 @@
                         <div class="col-6">
                             <label>description</label>
                             <div class="input-group">
-                                <input type="text" step="0.1" min="1" class="form-control" name="description<"
-                                    value="{{ $row->description }}" >
+                                <input type="text" step="0.1" min="1" class="form-control"
+                                    name="description<" value="{{ $row->description }}">
                             </div>
                         </div>
 
