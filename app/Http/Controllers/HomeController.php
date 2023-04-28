@@ -23,9 +23,10 @@ class HomeController extends Controller
         $orders_count = Order::count();
         $demo_count = ProductInstallation::whereNull('order_id')->count();
         $users_count = ProductInstallation::whereNotNull('order_id')->count();
+        $reclamation_count=Reclamation::count();
 
         $orders_this_week = Order::where('status', 'in_progress')
-            ->whereBetween('date', [now()->subWeek(), now()])
+            ->whereBetween('date', [now(),now()->addWeek()])
             ->with('doctor', 'product')
             ->limit(7)
             ->orderBy('date', 'asc')
@@ -40,6 +41,7 @@ class HomeController extends Controller
 
         return view('home', [
             'orders_count' => $orders_count,
+            'reclamation_count'=>$reclamation_count,
             'demo_count' => $demo_count,
             'users_count' => $users_count,
             'resolved_tickets' => Reclamation::where('status', 'resolved')->count(),

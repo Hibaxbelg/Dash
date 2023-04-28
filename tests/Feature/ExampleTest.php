@@ -7,6 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Factory;
 use App\Models\Doctor;
+use App\Models\User;
 use App\Http\Controllers\DoctorController;
 
 class ExampleTest extends TestCase
@@ -18,13 +19,15 @@ class ExampleTest extends TestCase
 {
 
     // Create a user with the delete-doctor permission
-    $user = factory(User::class)->create();
-    $user->givePermissionTo('delete-doctor');
+   // $docteur = Doctor::factory()->create();
+    //$user->givePermissionTo('delete-doctor');
+    //$this->assertModelExists($user);
 
+$user =User::find(1);
     // Create a doctor to be deleted
-    $doctor = factory(Doctor::class)->create();
+    $doctor = Doctor::factory()->create();
 
-    // Send a DELETE request to the route with the doctor's ID
+     // Send a DELETE request to the route with the doctor's ID
     $response = $this->actingAs($user)->delete('/doctors/'.$doctor->id);
 
     // Check that the response has a redirect status code

@@ -10,7 +10,9 @@ class Reclamation extends Model
 {
     use HasFactory,StoreAction;
 
-    protected $fillable = ['objet','user_id','description','solution'];
+    protected $guarded = [];
+
+    // protected $fillable = ['objet','user_id','description','solution','status','cnamId'];
 
 
     public function user()

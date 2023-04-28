@@ -41,7 +41,7 @@
                 name="password" placeholder="{{ __('Password') }}" autocomplete="current-password">
 
             <label>
-                <input {{ old('remember') ? 'checked' : '' }} type="checkbox" name="remember">
+                <input {{ old('remember') ? 'checked' : '' }} type="checkbox" id="remember" name="remember">
                 <span></span>
                 <small class="rmb">Remember me</small>
             </label>

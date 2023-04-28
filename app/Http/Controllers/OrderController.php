@@ -53,14 +53,14 @@ class OrderController extends Controller
         }
 
         $datatable = new DataTableService([
-            ['name' => 'ID', 'data' => 'id'],
+            ['name' => 'ID', 'data' => 'id', 'searchable' => false],
             ['name' => 'Nom Client', 'data' => 'doctor.FAMNAME'],
             ['name' => 'Prenom Client', 'data' => 'doctor.SHORTNAME'],
             ['name' => 'Localité', 'data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites, 'visible' => false],
             ['name' => 'GouvName', 'data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames, 'visible' => false],
             ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE', 'visible' => false],
             ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
-            ['name' => 'Note', 'data' => 'note', 'visible' => false],
+            ['name' => 'Note', 'data' => 'note', 'visible' => false, 'searchable' => false],
             ['name' => 'Date', 'data' => 'date'],
             ['name' => 'Produit', 'data' => 'product.name'],
             ['name' => 'Licences', 'data' => 'licenses'],

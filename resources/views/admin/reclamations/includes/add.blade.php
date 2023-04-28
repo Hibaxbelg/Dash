@@ -31,6 +31,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
+                                <label>CnamId de Médecin :</label>
+                                <input type="text" class="form-control" name="cnamId" value="{{ old('cnamId') }}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
                                 <label>Objet :</label>
                                 <input type="text" class="form-control" name="objet" value="{{ old('objet') }}">
                             </div>

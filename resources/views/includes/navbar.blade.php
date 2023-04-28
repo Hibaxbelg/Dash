@@ -19,7 +19,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ route('profile') }}" class="dropdown-item">
-                    <i class="fa-solid fa-user-pen"></i> Modifier mon profile
+                    <i class="fa-solid fa-user-pen"></i> Mon profil
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" onclick="return document.getElementById('logout-form').submit()"

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Acceuil')
+@section('title', 'Dashboard')
 
 
 @push('scripts')
@@ -177,13 +177,13 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{ $users_count }}</h3>
-                                <p>Utilisateurs Débridé</p>
+                                <p>Utilisateurs Débridés</p>
                             </div>
                             <div class="icon">
                                 <i class="icon fa-solid fa-users"></i>
                             </div>
                             <a href="{{ route('installations.index') }}" class="small-box-footer">Lite des
-                                Utilisateurs Débridé <i class="fas fa-arrow-circle-right"></i></a>
+                                Utilisateurs Débridés <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -206,13 +206,13 @@
 
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ $resolved_tickets }}</h3>
-                                <p>Tickets résolus</p>
+                                <h3>{{ $reclamation_count }}</h3>
+                                <p>Réclamations</p>
                             </div>
                             <div class="icon">
                                 <i class="icon fa-solid fa-circle-check"></i>
                             </div>
-                            <a href="{{ route('reclamations.index') }}" class="small-box-footer">Afficher <i
+                            <a href="{{ route('reclamations.index') }}" class="small-box-footer">Liste des réclamations <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header bg-primary">
-                                <i class="fa-regular fa-handshake"></i> Les rendezvous de cette semaines
+                                <i class="fa-regular fa-handshake"></i> Les rendez-vous de cette semaine
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped table-bordered">
@@ -235,6 +235,7 @@
                                             <th scope="col">Client</th>
                                             <th scope="col">Adresse</th>
                                             <th scope="col">Téléphone</th>
+                                            <th scope="col">Gsm</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -251,6 +252,7 @@
                                                 <td>{{ $order->doctor->ADRESSE }},{{ $order->doctor->LOCALITE }},{{ $order->doctor->GOUVNAME }}
                                                 </td>
                                                 <td>{{ $order->doctor->TELEPHONE }}</td>
+                                                <td>{{ $order->doctor->GSM }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

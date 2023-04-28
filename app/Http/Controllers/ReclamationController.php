@@ -40,6 +40,7 @@ class ReclamationController extends Controller
             ['name' => 'objet', 'data' => 'objet'],
             ['name' => 'solution', 'data' => 'solution','searchable' => false],
             ['name' => 'description', 'data' => 'description','searchable' => false],
+            ['name' => 'cnamId', 'data' => 'cnamId'],
             ['name' => 'Etat', 'data' => 'status', 'searchable' => false, 'type' => 'select', 'values' => ['résolue', 'en attente', 'fermée']],
             ['name' => 'Date', 'data' => 'created_at'],
             ['name' => 'Action', 'data' => 'actions', 'searchable' => false]

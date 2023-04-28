@@ -4,6 +4,7 @@ namespace App\Http\Requests\Reclamations;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class UpdateReclamationRequest extends FormRequest
 {
@@ -27,6 +28,8 @@ class UpdateReclamationRequest extends FormRequest
             'objet' => 'required|string|max:25',
             'solution' => 'nullable',
             'user_id' => 'required|exists:users,id',
+            'status' => 'required|in:resolved,in_progress,closed',
+            'cnamId' => 'required|string|max:12',
             'description' => 'nullable',
         ];
     }

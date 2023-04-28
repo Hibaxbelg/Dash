@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
+    <!--Logo -->
     <a href="../../index3.html" class="brand-link">
         <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo">
     </a>
@@ -13,7 +13,7 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-                <span class="badge badge-primary"> {{ Auth::user()->role }}</span>
+                <span class="badge badge-primary">{{ Auth::user()->role }}</span>
             </div>
             {{-- <div style="align-self: center;text-align: right;flex: 1;">
                 <a href="{{ route('profile') }}">
@@ -22,17 +22,6 @@
             </div> --}}
         </div>
         <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
-                <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link">
-                        <i class="nav-icon fa-solid fa-house"></i>
-                        <p>Accueil</p>
-                    </a>
-                </li>
-            </ul>
-        </nav>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
@@ -79,7 +68,13 @@
                 <li class="nav-item">
                     <a href="{{ route('reclamations.index') }}" class="nav-link">
                         <i class="nav-icon fa-regular fa-pen-to-square"></i>
-                        <p>Gestion des réclamations</p>
+                        <p>Gestion réclamations
+                            @if (App\Models\Reclamation::InProgress()->count() > 0)
+                                <span class="badge badge-danger right">
+                                    {{ App\Models\Reclamation::InProgress()->count() }}
+                                </span>
+                            @endif
+                        </p>
                     </a>
                 </li>
             </ul>

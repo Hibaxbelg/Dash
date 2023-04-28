@@ -14,6 +14,13 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
+                            <label>CnamId de médecin</label>
+                            <input type="text" class="form-control" name="cnamId" value="{{ $row->cnamId }}"
+                                disabled required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
                             <label>Objet</label>
                             <input type="text" class="form-control" name="objet" value="{{ $row->objet }}"
                                 disabled required>

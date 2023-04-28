@@ -27,6 +27,7 @@ class StoreReclamationRequest extends FormRequest
             'objet' => 'required|string|max:25',
             'solution' => 'nullable',
             'user_id' => 'required|exists:users,id',
+            'cnamId' => 'required|string|max:12',
             'description' => 'nullable',
         ];
     }

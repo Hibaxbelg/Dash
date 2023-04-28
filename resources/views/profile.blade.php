@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profile')
+@section('title', 'Profil')
 
 @section('content')
     <div class="content-wrapper">
@@ -10,7 +10,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Profile :</h3>
+                                <h3 class="card-title">Profil :</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
