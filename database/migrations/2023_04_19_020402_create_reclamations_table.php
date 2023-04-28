@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('objet');
             $table->string('solution')->nullable();
             $table->string('description')->nullable();
+            $table->string('cnamId');
             $table->enum('status', ['resolved', 'in_progress', 'closed'])->default('in_progress');
             $table->timestamps();
         });

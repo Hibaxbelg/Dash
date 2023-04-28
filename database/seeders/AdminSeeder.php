@@ -22,6 +22,7 @@ class AdminSeeder extends Seeder
                 'role' => 'super-admin',
                 'password' => '123456789',
             ]);
+            user::factory(50)->create();
         });
     }
 }
