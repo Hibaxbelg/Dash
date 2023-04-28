@@ -15,5 +15,5 @@ class Product extends Model
     protected $casts = [
         'date' => 'datetime',
 
-    ;
+    ];
 }
