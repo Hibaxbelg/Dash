@@ -4,9 +4,12 @@
 
 @include('includes.datatable', ['AJAX_URL' => route('orders.index')])
 
-<script>
-    let products = @json($products);
-</script>
+@push('scripts')
+    <script>
+        let products = @json($products);
+    </script>
+@endpush
+
 @include('admin.doctors.includes.calcule-price')
 
 @section('content')

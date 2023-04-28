@@ -1,27 +1,29 @@
-<script>
-    function caclprixDeplacement(km) {
-        if (isNaN(km) || km <= 0) {
-            return 0;
-        }
-        return {{ $prix_KM }} * km;
-    }
-
-    function calculePrice(product_id, pc_numbers) {
-        let product = products.filter(p => p.id == product_id)[0];
-        pc_numbers = Number(pc_numbers);
-        if (pc_numbers == 0 || pc_numbers < product.min_pc_number) {
-            return 0.0;
+@push('scripts')
+    <script>
+        function caclprixDeplacement(km) {
+            if (isNaN(km) || km <= 0) {
+                return 0;
+            }
+            return {{ $prix_KM }} * km;
         }
 
-        let price = product.price;
+        function calculePrice(product_id, pc_numbers) {
+            let product = products.filter(p => p.id == product_id)[0];
+            pc_numbers = Number(pc_numbers);
+            if (pc_numbers == 0 || pc_numbers < product.min_pc_number) {
+                return 0.0;
+            }
 
-        // calculer le prix
-        let additional_pc = pc_numbers - product.min_pc_number;
+            let price = product.price;
 
-        if (additional_pc > 0) {
-            price += additional_pc * product.price_per_additional_pc;
+            // calculer le prix
+            let additional_pc = pc_numbers - product.min_pc_number;
+
+            if (additional_pc > 0) {
+                price += additional_pc * product.price_per_additional_pc;
+            }
+
+            return price;
         }
-
-        return price;
-    }
-</script>
+    </script>
+@endpush
