@@ -63,6 +63,7 @@ class InstallationController extends Controller
             //['name' => 'GouvName', 'data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames, 'visible' => false],
             ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE', 'visible' => false],
             ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
+            ['name' => 'CnamId', 'data' => 'installation'],
             // ['name' => 'Note', 'data' => 'note', 'visible' => false, 'searchable' => false],
             // ['name' => 'Date', 'data' => 'date'],
             // ['name' => 'Produit', 'data' => 'product.name'],
