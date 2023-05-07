@@ -19,7 +19,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            @foreach (json_decode($row->previous_data) as $key => $value)
+                            @foreach ($row->previous_data as $key => $value)
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{ $key }} :</label>
