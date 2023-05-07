@@ -139,6 +139,10 @@ class StatisticService
             $reclamations_responses_in_minutes[] = $reclamation->updated_at->diffInMinutes($reclamation->created_at);
         }
 
+        if (count($reclamations_responses_in_minutes) == 0) {
+            return "0 minute";
+        }
+
         $average_time_minutes = array_sum($reclamations_responses_in_minutes) / count($reclamations_responses_in_minutes);
 
         if ($average_time_minutes < 60) {
