@@ -43,26 +43,26 @@ class InstallationController extends Controller
 
             $table = datatables()->of($results);
 
+            $table->addColumn('doctor.name', fn($row) => $row['doctor']['FAMNAME'] . ' ' . $row['doctor']['SHORTNAME']);
+            $table->addColumn('status', fn($row) => $row['doctor']['FAMNAME'] . ' ' . $row['doctor']['SHORTNAME']);
+            $table->addColumn('expiration_date',fn($row)=>);
             return $table->make(true);
         }
 
-        $datatable = new DataTableService([
-            // ['name' => 'ID', 'data' => 'id', 'searchable' => false],
-            ['name' => 'Nom Client', 'data' => 'doctor.FAMNAME'],
-            ['name' => 'Prenom Client', 'data' => 'doctor.SHORTNAME'],
-            //['name' => 'Localité', 'data' => 'doctor.LOCALITE', 'type' => 'select', 'values' => $localites, 'visible' => false],
-            //['name' => 'GouvName', 'data' => 'doctor.GOUVNAME', 'type' => 'select', 'values' => $gouvnames, 'visible' => false],
-            ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE', 'visible' => false],
+        $data = [
+            ['name' => 'ID Commande', 'data' => 'order_id', 'searchable' => false],
+            ['name' => 'Medecin', 'data' => 'doctor.name'],
             ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
+            ['name' => 'Telephone', 'data' => 'doctor.GSM'],
+            ['name' => 'Etat', 'data' => 'status'],
             ['name' => 'installation', 'data' => 'installation_count'],
-            // ['name' => 'Note', 'data' => 'note', 'visible' => false, 'searchable' => false],
-            // ['name' => 'Date', 'data' => 'date'],
-            // ['name' => 'Produit', 'data' => 'product.name'],
-            // ['name' => 'Licences', 'data' => 'licenses'],
-            // ['name' => 'Prix', 'data' => 'price'],
-            // ['name' => 'Etat', 'data' => 'status', 'searchable' => false, 'type' => 'select', 'values' => ['En attente', 'En cours', 'Terminé', 'Annulé']],
-            // ['name' => 'Action', 'data' => 'actions', 'searchable' => false],
-        ]);
+        ];
+
+        if ($request->type == 'demo') {
+            $data[] = ['name' => '	Date Expiration', 'data' => 'expiration_date', 'searchable' => false];
+        }
+
+        $datatable = new DataTableService($data);
 
         return view('admin.installations.index', ['datatable' => $datatable]);
     }
