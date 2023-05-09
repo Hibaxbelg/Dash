@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\ProductInstallation;
+use App\Services\DataTableService;
 use Illuminate\Http\Request;
 
 class InstallationController extends Controller
@@ -38,7 +39,54 @@ class InstallationController extends Controller
             })->values();
         }
 
-        return view('admin.installations.index', ['installations' => $results]);
+        if ($request->ajax()) {
+
+            $table = datatables()->of($results);
+
+            $table->addColumn('doctor.name', fn($row) => $row['doctor']['FAMNAME'] . ' ' . $row['doctor']['SHORTNAME']);
+
+            if ($request->type !== 'demo') {
+                $table->editColumn('installation_count', fn($row) => $row['installation_count'] . '/' . $row['order']['licenses']);
+            }
+
+            $table->addColumn('status', fn($row) => view('admin.installations.includes.datatable.status-field', ['row' => $row]));
+
+            if ($request->type !== 'demo') {
+                $table->addColumn('actions', fn($row) => view('admin.installations.includes.datatable.actions', [
+                    'row' => $row,
+                ]));
+            }
+
+            if ($request->type == 'demo') {
+                $table->addColumn('expiration_date', fn($row) => $row->created_at);
+            }
+            return $table->make(true);
+        }
+
+        if ($request->type == 'demo') {
+            $data = [
+                ['name' => 'Medecin', 'data' => 'doctor.name'],
+                ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
+                ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE'],
+                ['name' => 'Etat', 'data' => 'status', 'searchable' => false],
+                ['name' => 'Date Installation', 'data' => 'created_at', 'searchable' => false],
+                ['name' => 'Date Expiration', 'data' => 'expiration_date', 'searchable' => false],
+            ];
+        } else {
+            $data = [
+                ['name' => 'ID Commande', 'data' => 'order_id', 'searchable' => false],
+                ['name' => 'Medecin', 'data' => 'doctor.name'],
+                ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
+                ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE'],
+                ['name' => 'Nombre des licences utilisées', 'data' => 'installation_count', 'searchable' => false],
+                ['name' => 'Etat', 'data' => 'status', 'searchable' => false],
+                ['name' => 'Action', 'data' => 'actions', 'searchable' => false],
+            ];
+        }
+
+        $datatable = new DataTableService($data);
+
+        return view('admin.installations.index', ['datatable' => $datatable]);
     }
 
     public function updateOrderStatus(Request $request)
