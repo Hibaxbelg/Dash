@@ -294,8 +294,11 @@
                                         <div class="col-md-3 text-center">
                                             <h2> {{ $qualite['count'] }} <sup>
                                                     <small style="color:gray;font-size:13px">
-
-                                                        {{ number_format(((float) $qualite['count'] * 100) / collect($qualites)->sum('count'), 2, '.', '') }}
+                                                        @if (collect($qualites)->sum('count') > 0)
+                                                            {{ number_format(((float) $qualite['count'] * 100) / collect($qualites)->sum('count'), 2, '.', '') }}
+                                                        @else
+                                                            0
+                                                        @endif
                                                         %
                                                     </small>
                                                 </sup>
