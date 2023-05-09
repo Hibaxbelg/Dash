@@ -44,22 +44,44 @@ class InstallationController extends Controller
             $table = datatables()->of($results);
 
             $table->addColumn('doctor.name', fn($row) => $row['doctor']['FAMNAME'] . ' ' . $row['doctor']['SHORTNAME']);
-            $table->addColumn('status', fn($row) => $row['doctor']['FAMNAME'] . ' ' . $row['doctor']['SHORTNAME']);
-            $table->addColumn('expiration_date',fn($row)=>);
+
+            if ($request->type !== 'demo') {
+                $table->editColumn('installation_count', fn($row) => $row['installation_count'] . '/' . $row['order']['licenses']);
+            }
+
+            $table->addColumn('status', fn($row) => view('admin.installations.includes.datatable.status-field', ['row' => $row]));
+
+            if ($request->type !== 'demo') {
+                $table->addColumn('actions', fn($row) => view('admin.installations.includes.datatable.actions', [
+                    'row' => $row,
+                ]));
+            }
+
+            if ($request->type == 'demo') {
+                $table->addColumn('expiration_date', fn($row) => $row->created_at);
+            }
             return $table->make(true);
         }
 
-        $data = [
-            ['name' => 'ID Commande', 'data' => 'order_id', 'searchable' => false],
-            ['name' => 'Medecin', 'data' => 'doctor.name'],
-            ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
-            ['name' => 'Telephone', 'data' => 'doctor.GSM'],
-            ['name' => 'Etat', 'data' => 'status'],
-            ['name' => 'installation', 'data' => 'installation_count'],
-        ];
-
         if ($request->type == 'demo') {
-            $data[] = ['name' => '	Date Expiration', 'data' => 'expiration_date', 'searchable' => false];
+            $data = [
+                ['name' => 'Medecin', 'data' => 'doctor.name'],
+                ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
+                ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE'],
+                ['name' => 'Etat', 'data' => 'status', 'searchable' => false],
+                ['name' => 'Date Installation', 'data' => 'created_at', 'searchable' => false],
+                ['name' => 'Date Expiration', 'data' => 'expiration_date', 'searchable' => false],
+            ];
+        } else {
+            $data = [
+                ['name' => 'ID Commande', 'data' => 'order_id', 'searchable' => false],
+                ['name' => 'Medecin', 'data' => 'doctor.name'],
+                ['name' => 'CnamId', 'data' => 'doctor.CNAMID'],
+                ['name' => 'Telephone', 'data' => 'doctor.TELEPHONE'],
+                ['name' => 'Nombre des licences utilisées', 'data' => 'installation_count', 'searchable' => false],
+                ['name' => 'Etat', 'data' => 'status', 'searchable' => false],
+                ['name' => 'Action', 'data' => 'actions', 'searchable' => false],
+            ];
         }
 
         $datatable = new DataTableService($data);

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Liste des Installations')
-@include('includes.datatable', ['AJAX_URL' => route('installations.index')])
+@include('includes.datatable', ['AJAX_URL' => route('installations.index', ['type' => request()->type])])
 
 @section('content')
     <div class="content-wrapper">

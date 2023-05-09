@@ -11,6 +11,10 @@ class ProductInstallation extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'RECORD_ID');
