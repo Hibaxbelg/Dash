@@ -26,15 +26,17 @@ trait StoreAction
 
     public function storeAction($action, $previousData = null)
     {
-        $data = [
-            'user_id' => Auth::user()->id,
-            'model_type' => get_class($this),
-            'model_id' => $this->getKey(),
-            'action' => $action,
-            'previous_data' => $previousData ? json_encode($previousData) : null,
-        ];
+        if (Auth::check()) {
+            $data = [
+                'user_id' => Auth::user()->id,
+                'model_type' => get_class($this),
+                'model_id' => $this->getKey(),
+                'action' => $action,
+                'previous_data' => $previousData ? json_encode($previousData) : null,
+            ];
 
-        $this->actions()->create($data);
+            $this->actions()->create($data);
+        }
     }
 
     public function actions()
