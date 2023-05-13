@@ -21,6 +21,11 @@ class Order extends Model
         return $this->belongsTo(Doctor::class, 'doctor_id', 'RECORD_ID');
     }
 
+    public function productInstallations()
+    {
+        return $this->hasMany(ProductInstallation::class);
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);

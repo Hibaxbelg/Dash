@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Doctors\StoreDoctorRequest;
 use App\Http\Requests\Doctors\UpdateDoctorRequest;
-use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Product;
 use App\Services\DataTableService;
 use App\Services\OrderService;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
@@ -25,7 +24,7 @@ class DoctorController extends Controller
 
             $table = datatables()::of(Doctor::query());
 
-            $table->addColumn('actions', fn ($row) => view('admin.doctors.includes.datatable.actions', [
+            $table->addColumn('actions', fn($row) => view('admin.doctors.includes.datatable.actions', [
                 'row' => $row,
                 'gouvnames' => $gouvnames,
                 'localites' => $localites,
@@ -46,25 +45,32 @@ class DoctorController extends Controller
             ['name' => 'Localité', 'data' => 'LOCALITE', 'type' => 'select', 'values' => $localites],
             ['name' => 'Tél', 'data' => 'TELEPHONE'],
             ['name' => 'Gsm', 'data' => 'GSM'],
-            ['name' => 'Action', 'data' => 'actions', 'searchable' => false]
+            ['name' => 'Action', 'data' => 'actions', 'searchable' => false],
         ]);
 
         return view('admin.doctors.index', [
             'datatable' => $datatable, 'gouvnames' => $gouvnames, 'localites' => $localites, 'specialites' => $specialites, 'products' => $products,
-            'prix_KM' => OrderService::$prix_KM
+            'prix_KM' => OrderService::$prix_KM,
         ]);
     }
-
 
     public function destroy($RECORD_ID)
     {
 
-        Doctor::find($RECORD_ID)->delete();
+        $doctor = Doctor::findOrFail($RECORD_ID);
+        $orders = $doctor->orders()->get();
+
+        foreach ($orders as $order) {
+            $order->productInstallations()->delete();
+            $order->delete();
+        }
+
+        $doctor->delete();
 
         return redirect()->route('doctors.index')
             ->with([
                 'message' => 'Médecin supprimé avec succès',
-                'type' => 'success'
+                'type' => 'success',
             ]);
     }
 
@@ -77,7 +83,7 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index')
             ->with([
                 'message' => 'Médecin modifié avec succès',
-                'type' => 'success'
+                'type' => 'success',
             ]);
     }
 
@@ -89,7 +95,7 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index')
             ->with([
                 'message' => 'Médecin inseré avec succès',
-                'type' => 'success'
+                'type' => 'success',
             ]);
     }
 }
