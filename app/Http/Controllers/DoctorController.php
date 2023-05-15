@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+    public function search(Request $request)
+    {
+        $doctors = Doctor::where('SPECIALITE', $request->get('SPECIALITE'))
+            ?->where('GOUVNAME', $request->get('GOUVNAME'))
+            ->get();
+        return response()->json($doctors);
+    }
     public function index(Request $request)
     {
 

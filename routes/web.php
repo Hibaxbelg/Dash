@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/doctors', 'App\Http\Controllers\DoctorController@store')
         ->name('doctors.store');
 
+    Route::post('/doctors/search', 'App\Http\Controllers\DoctorController@search')
+        ->name('doctors.search');
+
     Route::resource('/orders', OrderController::class);
     Route::resource('/reclamations', ReclamationController::class);
     Route::resource('/contract', ContractController::class);
