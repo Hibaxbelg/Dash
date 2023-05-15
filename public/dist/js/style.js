@@ -16,33 +16,6 @@ function myToggle () {
     }
 }
 
-// Form Validation
-
-function checkStuff() {
-  var email = document.form1.email;
-  var password = document.form1.password;
-  var msg = document.getElementById('msg');
-
-  if (email.value == "") {
-    msg.style.display = 'block';
-    msg.innerHTML = "veuillez saisir un Email ";
-    email.focus();
-    return false;
-  } else {
-    msg.innerHTML = "";
-  }
-
-   if (password.value == "") {
-    msg.innerHTML = "veuillez saisir un mot de passe";
-    password.focus();
-    return false;
-  } else {
-    msg.innerHTML = "";
-  }
-
-}
-
-// ParticlesJS
 
 // ParticlesJS Config.
 particlesJS("particles-js", {

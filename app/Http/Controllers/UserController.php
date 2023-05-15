@@ -60,6 +60,10 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         User::create($request->validated());
+        return redirect()->route('users.index')->with([
+            'message' => 'Utilisateur ajouté avec succès',
+            'type' => 'success'
+        ]);
     }
 
 
@@ -69,13 +73,22 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
+        return redirect()->route('users.index')->with([
+            'message' => 'Utilisateur modifié avec succès',
+            'type' => 'success'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        User::find($id)->delete();
+
+        return redirect()->route('users.index')->with([
+            'message' => 'Utilisateur supprimé avec succès',
+            'type' => 'success'
+        ]);
     }
 }

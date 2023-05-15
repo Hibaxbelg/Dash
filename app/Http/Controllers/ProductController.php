@@ -61,25 +61,6 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): Response
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): Response
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateProductRequest $request, string $id)
     {
         $validated = $request->validated();
@@ -87,7 +68,7 @@ class ProductController extends Controller
         Product::find($id)->update($validated);
 
         return redirect()->route('products.index')->with([
-            'message' => 'Product modifiée avec succès',
+            'message' => 'Produit modifié avec succès',
             'type' => 'success'
         ]);
     }

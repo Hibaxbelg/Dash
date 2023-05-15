@@ -60,7 +60,7 @@ class ProductTest extends TestCase
     {
         $response = $this->actingAs($this->user)->postJson('/products', $this->data);
 
-        $response->assertRedirect();
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('products', $this->data);
     }
@@ -94,7 +94,7 @@ class ProductTest extends TestCase
 
         $response = $this->actingAs($this->user)->putJson('/products/' . $product->id, $this->data);
 
-        $response->assertRedirect();
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('products', ['id' => $product->id, ...$this->data]);
     }

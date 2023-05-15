@@ -36,11 +36,11 @@ class DoctorController extends Controller
         }
 
         $datatable = new DataTableService([
-            ['name' => 'UID'],
+            ['name' => 'Id', 'data' => 'RECORD_ID', 'searchable' => false],
             ['name' => 'Nom', 'data' => 'FAMNAME'],
             ['name' => 'Prénom', 'data' => 'SHORTNAME'],
             ['name' => 'Spécalité', 'data' => 'SPECIALITE', 'type' => 'select', 'values' => $specialites],
-            ['name' => 'ID.CNAM', 'data' => 'CNAMID'],
+            ['name' => 'Id CNAM', 'data' => 'CNAMID'],
             ['name' => 'Gouvern', 'data' => 'GOUVNAME', 'type' => 'select', 'values' => $gouvnames],
             ['name' => 'Localité', 'data' => 'LOCALITE', 'type' => 'select', 'values' => $localites],
             ['name' => 'Tél', 'data' => 'TELEPHONE'],
@@ -80,8 +80,7 @@ class DoctorController extends Controller
         $doctor = Doctor::find($RECORD_ID)
             ->update($request->validated());
 
-        return redirect()->route('doctors.index')
-            ->with([
+        return redirect()->route('doctors.index')->with([
                 'message' => 'Médecin modifié avec succès',
                 'type' => 'success',
             ]);
@@ -94,7 +93,7 @@ class DoctorController extends Controller
 
         return redirect()->route('doctors.index')
             ->with([
-                'message' => 'Médecin inseré avec succès',
+                'message' => 'Médecin ajouté avec succès',
                 'type' => 'success',
             ]);
     }

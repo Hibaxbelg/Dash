@@ -31,7 +31,7 @@
                                             disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label>CnamID:</label>
+                                        <label>Id Cnam:</label>
                                         <input type="text" value="{{ $row->doctor->CNAMID }}" class="form-control"
                                             disabled>
                                     </div>
@@ -41,7 +41,7 @@
                                             disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label>Gouv :</label>
+                                        <label>Gouvernorat :</label>
                                         <input type="text" value="{{ $row->doctor->GOUVNAME }}" class="form-control"
                                             disabled>
                                     </div>

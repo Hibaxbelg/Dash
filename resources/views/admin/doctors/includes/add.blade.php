@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>SPECIALITE</label>
+                                <label>Spécialité</label>
                                 <select name="SPECIALITE" class="form-control select2bs4">
                                     @foreach ($specialites as $specialite)
                                         <option value="{{ $specialite }}">{{ $specialite }}</option>
@@ -47,20 +47,20 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>SHORTNAME</label>
+                                <label>Nom</label>
                                 <input type="text" class="form-control" name="SHORTNAME"
                                     value="{{ old('SHORTNAME') }}">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>FAMNAME</label>
+                                <label>Prénom</label>
                                 <input type="text" class="form-control" name="FAMNAME" value="{{ old('FAMNAME') }}">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label>GOUVNAME</label>
+                                <label>Gouvernorat</label>
                                 <select name="GOUVNAME" class="form-control select2bs4">
                                     @foreach ($gouvnames as $gouvname)
                                         <option value="{{ $gouvname }}">{{ $gouvname }}</option>

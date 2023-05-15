@@ -134,7 +134,7 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home"
                                 type="button" role="tab" aria-controls="home" aria-selected="true">
-                                <i class="fa-solid fa-location-dot"></i> Commandes Par GouvName
+                                <i class="fa-solid fa-location-dot"></i> Commandes Par Gouvernorat
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">

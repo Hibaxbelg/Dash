@@ -51,7 +51,7 @@
                                             <img class="rounded-circle" width="150" height="150"
                                                 src="{{ Auth::user()->avatar }}">
                                             <div class="form-group">
-                                                <label>Photo De profile : </label>
+                                                <label>Photo de profil : </label>
                                                 <input type="file" name="avatar" class="form-control">
                                             </div>
                                         </div>

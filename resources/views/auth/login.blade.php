@@ -29,7 +29,7 @@
             <!-- form inputs here -->
             <h4>Esib<span>Dashboard</span></h4>
             <h5>connecter a votre compte</h5>
-            <input id="email" type="text" name="email" :value="old('email')" placeholder="{{ __('Email') }}"
+            <input id="email" type="text" name="email" value="{{ old('email') }}" placeholder="{{ __('Email') }}"
                 autofocus>
 
 
@@ -43,7 +43,7 @@
             <label>
                 <input {{ old('remember') ? 'checked' : '' }} type="checkbox" id="remember" name="remember">
                 <span></span>
-                <small class="rmb">Remember me</small>
+                <small class="rmb">Se souvenir de moi</small>
             </label>
             <input type="submit" value="Se connecter" class="btn1">
 

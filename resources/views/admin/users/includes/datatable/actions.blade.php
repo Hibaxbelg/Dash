@@ -8,16 +8,18 @@
             data-target="#users-edit-{{ $row->id }}-modal">
             <i class="fa-solid fa-pen"></i> Modifier
         </a>
-        {{-- <div class="dropdown-divider"></div>
+    <div class="dropdown-divider"></div>
         <a style="cursor: pointer;" class="dropdown-item"
-            onClick="document.getElementById('users-delete-{{ $row->id }}-form').submit();">
-            <i class="fa-solid fa-trash"></i> Supprimer
-            <form method="post" action="{{ route('users.index', $row->id) }}"
-                id="users-delete-{{ $row->id }}-form" action="" style="display:none">
-                @csrf
-                @method('delete')
-            </form>
-        </a> --}}
+        onClick="confirm_delete(function(){
+                document.getElementById('delete-user-{{ $row->id }}-form').submit();
+            })">
+        <i class="fa-solid fa-trash"></i> Supprimer
+        <form method="post" action="{{ route('users.destroy', $row->id) }}"
+            id="delete-user-{{ $row->id }}-form" action="" style="display:none">
+            @csrf
+            @method('delete')
+        </form>
+        </a>
     </div>
 </div>
 

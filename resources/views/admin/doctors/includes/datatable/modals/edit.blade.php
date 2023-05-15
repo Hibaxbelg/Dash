@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>SPECIALITE</label>
+                                <label>Spécialité</label>
                                 <select name="SPECIALITE" class="form-control select2bs4 select2bs4-modal">
                                     @foreach ($specialites as $specialite)
                                         <option @selected($row->SPECIALITE == $specialite) value="{{ $specialite }}">
@@ -36,20 +36,20 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>SHORTNAME</label>
+                                <label>Nom</label>
                                 <input type="text" class="form-control" name="SHORTNAME"
                                     value="{{ $row->SHORTNAME }}">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>FAMNAME</label>
+                                <label>Prénom</label>
                                 <input type="text" class="form-control" name="FAMNAME" value="{{ $row->FAMNAME }}">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label>GOUVNAME</label>
+                                <label>Gouvernorat</label>
                                 <select name="GOUVNAME" class="form-control select2bs4 select2bs4-modal">
                                     @foreach ($gouvnames as $gouvname)
                                         <option @selected($row->gouvnames == $gouvname) value="{{ $gouvname }}">
