@@ -12,14 +12,11 @@ class Reclamation extends Model
 
     protected $guarded = [];
 
-    // protected $fillable = ['objet','user_id','description','solution','status','cnamId'];
-
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 
     public function scopeInProgress($query)
     {

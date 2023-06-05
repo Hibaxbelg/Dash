@@ -14,7 +14,6 @@ class DataTableService
             $this->addColumn($column);
         }
     }
-
     public function addColumn(array $options = []): void
     {
         if (!isset($options['name'])) throw new \Exception('Column name is required');
@@ -29,8 +28,6 @@ class DataTableService
             'visible' => $options['visible'] ?? true,
         ];
     }
-
-
     public function getColumns($json = false): array
     {
         if ($json) {
@@ -41,7 +38,6 @@ class DataTableService
         }
         return $this->columns;
     }
-
     public function buildSearchInputs()
     {
         return view('services.datatable.search-fields', ['datatable' => $this]);

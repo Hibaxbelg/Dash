@@ -18,4 +18,9 @@ class Doctor extends Model
     {
         return $this->hasMany(Order::class, 'doctor_id', 'RECORD_ID');
     }
+
+    public function reclamations()
+    {
+        return $this->hasMany(Doctor::class, 'doctor_id', 'RECORD_ID');
+    }
 }

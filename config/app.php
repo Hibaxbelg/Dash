@@ -185,6 +185,7 @@ return [
 
         /*
          * Package Service Providers...
+         * Fortify Service Provider
          */
 
         FortifyServiceProvider::class,

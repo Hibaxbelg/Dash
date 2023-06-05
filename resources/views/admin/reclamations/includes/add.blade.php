@@ -58,7 +58,7 @@
                     success: function(data) {
                         $('#doctor').empty();
                         $.each(data, function(key, value) {
-                            $('#doctor').append('<option value="' + value.CNAMID + '">' + value.FAMNAME + '</option>');
+                            $('#doctor').append('<option value="' + value.CNAMID + '">' + value.FAMNAME + " " + value.SHORTNAME +'</option>');
                         });
                     }
                 });
@@ -119,8 +119,8 @@ $gouvs = DB::table('doctors')->select('GOUVNAME')->distinct()->get();
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label>Doctors :</label>
-                                <select id="doctor" name="cnamId" class="form-control">
+                                <label>Médecin :</label>
+                                <select id="doctor" name="cnamId" class="form-control" value="{{ old('cnamId') }}" required>
                                 </select>
                             </div>
                         </div>

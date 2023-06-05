@@ -22,7 +22,7 @@ class StoreDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'CNAMID' => 'required|string|max:12',
+            'CNAMID' => 'required|string|max:12|unique:doctors,CNAMID',
             'SPECIALITE' => 'required',
             'SHORTNAME' => 'required',
             'FAMNAME' => 'required',

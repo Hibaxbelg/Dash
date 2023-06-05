@@ -57,8 +57,8 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with([
             'message' => 'Produit ajouté avec succès',
-            'type' => 'success'
-        ]);
+             'type' => 'success'
+         ]);
     }
 
     public function update(UpdateProductRequest $request, string $id)
@@ -69,8 +69,8 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with([
             'message' => 'Produit modifié avec succès',
-            'type' => 'success'
-        ]);
+             'type' => 'success'
+         ]);
     }
 
     /**
