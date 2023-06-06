@@ -10,7 +10,7 @@
             table = $("#example1").DataTable({
                 dom: 'lBrtip',
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.2/i18n/fr-FR.json'
+                    url: "{{ asset('dist/fr-FR.json') }}"
                 },
                 ajax: "{{ $AJAX_URL }}",
                 processing: true,
