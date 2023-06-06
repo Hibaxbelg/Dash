@@ -7,13 +7,10 @@ use App\Http\Requests\Orders\UpdateOrderRequest;
 use App\Models\Doctor;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\SoftwareVersion;
 use App\Models\User;
 use App\Services\DataTableService;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -38,16 +35,16 @@ class OrderController extends Controller
                     ->orderBy('status', 'desc')
             );
 
-            $table->addColumn('actions', fn ($row) => view('admin.orders.includes.datatable.actions', [
+            $table->addColumn('actions', fn($row) => view('admin.orders.includes.datatable.actions', [
                 'row' => $row,
                 'users' => $users,
                 'gouvnames' => $gouvnames,
                 'products' => $products,
             ]));
 
-            $table->addColumn('status', fn ($row) => view('admin.orders.includes.datatable.status-field', ['row' => $row]));
-            $table->editColumn('date', fn ($row) => $row->date?->format('d/m/Y H:i:s'));
-            $table->editColumn('price', fn ($row) => $row->price + $row->dep_price . ' DT');
+            $table->addColumn('status', fn($row) => view('admin.orders.includes.datatable.status-field', ['row' => $row]));
+            $table->editColumn('date', fn($row) => $row->date?->format('d/m/Y H:i:s'));
+            $table->editColumn('price', fn($row) => $row->price + $row->dep_price . ' DT');
 
             return $table->make(true);
         }
@@ -66,7 +63,7 @@ class OrderController extends Controller
             ['name' => 'Licences', 'data' => 'licenses'],
             ['name' => 'Prix', 'data' => 'price'],
             ['name' => 'Etat', 'data' => 'status', 'searchable' => false, 'type' => 'select', 'values' => ['En attente', 'En cours', 'Terminé', 'Annulé']],
-            ['name' => 'Action', 'data' => 'actions', 'searchable' => false]
+            ['name' => 'Action', 'data' => 'actions', 'searchable' => false],
         ]);
 
         return view('admin.orders.index', ['datatable' => $datatable, 'products' => $products, 'prix_KM' => $this->orderService::$prix_KM]);
@@ -80,16 +77,12 @@ class OrderController extends Controller
             'dep_price' => $this->orderService->calculeFraisDeplacement($request->distance),
         ])->collect()->forget('time')->toArray();
 
-
         $data['installation_key'] = str()->random(4) . '-' . str()->random(4) . '-' . str()->random(4) . '-' . str()->random(4);
 
         $order = Order::create($data);
 
-        return redirect()->route('orders.index')
-            ->with([
-                'message' => 'Commande ajoutée avec succès',
-                'type' => 'success',
-            ]);
+        $request->session()->put('message', 'Commande ajoutée avec succès');
+        $request->session()->put('type', 'success');
 
     }
 
@@ -103,11 +96,9 @@ class OrderController extends Controller
 
         $order = Order::find($id)->update($data);
 
-        return redirect()->route('orders.index')
-            ->with([
-                'message' => 'Commande modifiée avec succès',
-                'type' => 'success',
-            ]);
+        $request->session()->put('message', 'Commande modifiée avec succès');
+        $request->session()->put('type', 'success');
+
     }
 
     public function destroy($id, Request $request)

@@ -15,7 +15,7 @@ class DoctorController extends Controller
     public function search(Request $request)
     {
         $doctors = Doctor::where('SPECIALITE', $request->get('SPECIALITE'))
-            ?->where('GOUVNAME', $request->get('GOUVNAME'))
+        ?->where('GOUVNAME', $request->get('GOUVNAME'))
             ->get();
         return response()->json($doctors);
     }
@@ -87,10 +87,8 @@ class DoctorController extends Controller
         $doctor = Doctor::find($RECORD_ID)
             ->update($request->validated());
 
-        return redirect()->route('doctors.index')->with([
-                'message' => 'Médecin modifié avec succès',
-                'type' => 'success',
-            ]);
+        $request->session()->put('message', 'Médecin modifié avec succès');
+        $request->session()->put('type', 'success');
     }
 
     public function store(StoreDoctorRequest $request)
@@ -103,5 +101,6 @@ class DoctorController extends Controller
                 'message' => 'Médecin ajouté avec succès',
                 'type' => 'success',
             ]);
+
     }
 }

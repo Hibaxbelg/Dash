@@ -2,8 +2,8 @@
     @if (Session::has('message') && Session::has('type'))
         <script>
             swal({
-                text: "{{ Session::get('message') }}",
-                icon: "{{ Session::get('type') }}",
+                text: "{{ Session::pull('message') }}",
+                icon: "{{ Session::pull('type') }}",
             });
         </script>
     @endif

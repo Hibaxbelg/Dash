@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Services\DataTableService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -24,11 +23,11 @@ class UserController extends Controller
                     ->orderBy('id', 'desc')
             );
 
-            $table->addColumn('actions', fn ($row) => view('admin.users.includes.datatable.actions', ['row' => $row]));
-            $table->editColumn('avatar', fn ($row) => view('admin.users.includes.datatable.avatar', ['row' => $row]));
-            $table->editColumn('is_active', fn ($row) => view('admin.users.includes.datatable.status', ['row' => $row]));
-            $table->editColumn('created_at', fn ($row) => $row->created_at?->format('d/m/Y H:i:s'));
-            $table->editColumn('updated_at', fn ($row) => $row->updated_at?->format('d/m/Y H:i:s'));
+            $table->addColumn('actions', fn($row) => view('admin.users.includes.datatable.actions', ['row' => $row]));
+            $table->editColumn('avatar', fn($row) => view('admin.users.includes.datatable.avatar', ['row' => $row]));
+            $table->editColumn('is_active', fn($row) => view('admin.users.includes.datatable.status', ['row' => $row]));
+            $table->editColumn('created_at', fn($row) => $row->created_at?->format('d/m/Y H:i:s'));
+            $table->editColumn('updated_at', fn($row) => $row->updated_at?->format('d/m/Y H:i:s'));
             return $table->make(true);
         }
 
@@ -48,7 +47,7 @@ class UserController extends Controller
             ],
             ['name' => 'Date Creation', 'data' => 'created_at', 'searchable' => false],
             ['name' => 'Date Modification', 'data' => 'updated_at', 'searchable' => false],
-            ['name' => 'Action', 'data' => 'actions', 'searchable' => false]
+            ['name' => 'Action', 'data' => 'actions', 'searchable' => false],
         ]);
 
         return view('admin.users.index', ['datatable' => $datatable]);
@@ -60,12 +59,10 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         User::create($request->validated());
-        return redirect()->route('users.index')->with([
-            'message' => 'Utilisateur ajouté avec succès',
-            'type' => 'success'
-        ]);
-    }
 
+        $request->session()->put('message', 'Utilisateur ajouté avec succès');
+        $request->session()->put('type', 'success');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -73,10 +70,9 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
-        return redirect()->route('users.index')->with([
-            'message' => 'Utilisateur modifié avec succès',
-            'type' => 'success'
-        ]);
+
+        $request->session()->put('message', 'Utilisateur modifié avec succès');
+        $request->session()->put('type', 'success');
     }
 
     /**
@@ -88,7 +84,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with([
             'message' => 'Utilisateur supprimé avec succès',
-            'type' => 'success'
+            'type' => 'success',
         ]);
     }
 }
